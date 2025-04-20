@@ -112,8 +112,8 @@ async function extractSpellsFromPage() {
 
             //get the range of the spell
             let trueRange;
-            let numrange = spell.querySelector('.styles_numberDisplay__Rg1za');
-            let typerange = spell.querySelector('.ct-spells-spell__range-origin');
+            let numrange = spell.querySelector('.ct-spells-spell__range-value');
+            let typerange = spell.querySelector('.ct-spells-spell__range.ct-spells-spell--dark-mode');
 
             if (numrange) {
                 trueRange = numrange?.textContent.trim();

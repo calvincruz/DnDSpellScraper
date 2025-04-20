@@ -1,0 +1,15 @@
+Download the D&DScraper folder any way you like. You have two options:
+  1 Navigate to the repository and click on the green CODE button. Download as ZIP, then extract to wherever you want on your PC.
+  2 Clone the repository to whatever folder you like.
+Go to this link: chrome://extensions
+Enable "Developer Mode" on the top right.
+Click "Load unpacked" on the top left.
+Select the scraper folder as the extension directory, whether you cloned or downloaded. Make sure it says "Folder: D&DScraper" before you press "Select folder",
+  or at least until there are no more folders to choose from (youre probably at the right folder at this point).
+The extension will load and be available to use as a regular extension. 
+Navigate to D&D Beyond and view your characters sheet. This is where you can see your actions, spells, stats, etc.
+Run the extension by clicking on the puzzle piece box to the right of the search bar, and click on the new extension. 
+You will see all of your spells pop up 1 by 1 briefly; the extension is retrieving all of the spell notes, durations, and ranges.
+Once complete (after a few seconds at most), the extension will open a new window with all of the scraped information formatted. 
+The damage values will be accurate according to modifiers and whatnot.
+Enjoy!

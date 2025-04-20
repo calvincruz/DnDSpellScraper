@@ -1,0 +1,199 @@
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "getSpells") {
+        // Mark as async and handle properly
+        (async () => {
+            try {
+                const spells = await extractSpellsFromPage();
+                sendResponse({ spells });
+            } catch (error) {
+                console.error("Error extracting spells:", error);
+                sendResponse({ spells: [] });
+            }
+        })();
+        return true; // Required for async response
+    }
+});
+
+function openSpells() {
+    //search the entire document for the placeholder names
+    let elements = document.querySelectorAll('.styles_tabButton__wvSLf');
+    let elementToClick;
+    //for each element in the document, if the text is "Spells", we want to click that.
+    for (let element of elements) {
+        //check if there is text content
+        if (element.textContent) {
+            //if so, check if the text element is "Spells"
+            if (element.textContent.trim() == "Spells") {
+                //if it is "Spells", we should click on that and stop looking
+                elementToClick = element;
+                break;
+            }
+        }
+    }
+    if (elementToClick) {
+        elementToClick.click();
+        console.log("Clicked:", elementToClick.textContent.trim());
+    } else {
+        console.warn("Element not found.");
+    }
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function clickElement(element) {
+    //if it exists, then you can cilck on it.
+    element.click();
+}
+
+
+async function extractSpellsFromPage() {
+    let spellList = [];
+    openSpells();
+
+    // 1. Find the main spells container
+    const spellsContainers = document.querySelectorAll('.styles_content__QjnYw');
+
+    let correctSpellContainer = null;
+    for (let container of spellsContainers) {
+        const subContainer = container.querySelector('.ct-content-group');
+
+        //if the subContainer exists:
+        if (subContainer)  // This checks for truthy DOM element (not null/undefined)
+        {
+            correctSpellContainer = container;
+            break;
+        }
+    }
+
+    if (correctSpellContainer == null) {
+        return [];
+    }
+
+
+    // 2. Find all spell levels (including cantrips)
+    const spellLevels = correctSpellContainer.querySelectorAll('.ct-content-group');
+
+
+    //for each level type:
+    for (let level of spellLevels) {
+
+        //get the relevant information
+        let levelContent = level.querySelector('.ct-content-group__content');
+        let spellsLevel = levelContent.querySelector('.ct-spells-level');
+        let spellsContent = spellsLevel.querySelector('.ct-spells-level__spells-content');
+        let spells = spellsContent.querySelectorAll('.ct-spells-spell');
+
+        //for each spell in the list of spells under the level type:
+        for (let spell of spells) {
+            let spellDamageClass = spell.querySelector('.ct-spells-spell__damage');
+            let spellDamageEffectClass = spellDamageClass.querySelector('.ddbc-spell-damage-effect.ddbc-spell-damage-effect--dark-mode');
+            let spellDamageEffectDamagesClass = spellDamageEffectClass.querySelector('.ddbc-spell-damage-effect__damages');
+
+            //some spells have no damage
+            let damage;
+            let damageType;
+
+            //if the damage class exists
+            if (spellDamageEffectDamagesClass) {
+                let diceContainerClass = spellDamageEffectDamagesClass.querySelector('.integrated-dice__container');
+                damage = diceContainerClass.querySelector('.ddbc-damage__value.ddbc-damage__value--dark-mode')?.textContent.trim();
+                //the aria label holds the damage type, it doesn't display it as text.
+                //have to take the label for the output table, which has the damage type as text
+                damageType = diceContainerClass.querySelector('.ddbc-damage-type-icon')?.ariaLabel.toString();
+            }
+            else {
+                //otherwise set the damage to N/A
+                damage = "N/A";
+                damageType = "N/A";
+            }
+
+            //get the range of the spell
+            let trueRange;
+            let numrange = spell.querySelector('.styles_numberDisplay__Rg1za');
+            let typerange = spell.querySelector('.ct-spells-spell__range-origin');
+
+            if (numrange) {
+                trueRange = numrange?.textContent.trim();
+            }
+            else if (typerange) {
+                trueRange = typerange?.textContent.trim();
+            }
+
+            //get the hit/DC of the spell
+            let attackingClass = spell.querySelector('.ct-spells-spell__attacking');
+            let toHitClass = attackingClass.querySelector('.ct-spells-spell__tohit');
+            let emptyHitClass = attackingClass.querySelector('.ct-spells-spell__empty-value');
+            let saveClass = attackingClass.querySelector('.ct-spells-spell__save');
+
+            let hitDC;
+
+            if (toHitClass) {
+                hitDC = toHitClass?.textContent.trim();
+            }
+            else if (emptyHitClass) {
+                hitDC = emptyHitClass?.textContent.trim();
+            }
+            else if (saveClass) {
+                hitDC = saveClass?.textContent.trim();
+            }
+
+
+            let spellNameClass = spell.querySelector('.ct-spells-spell__name');
+            let spellLabelClass = spellNameClass.querySelector('.ct-spells-spell__label');
+            let name = spellLabelClass.querySelector('.styles_spellName__wX3ll')?.textContent.trim();
+            let description = "N/A";
+            let duration = "N/A";
+
+            //first, search the page for the notes part of the spell list
+            let search = spell.querySelector('.ddbc-note-components');
+
+            //if the search comes back true, click on the notes section for the spell.
+            if (search) {
+
+                clickElement(search);
+                await delay(1);
+
+                //we want to search for the notes section of the now-open side panel
+                //if the search returns true, get that information out from the side panel.
+                let detailPage = document.querySelector('.ddbc-html-content.ct-spell-detail__description');
+
+
+                if (detailPage) {
+                    description = detailPage.textContent;
+                }
+                else {
+                    description = "N/A";
+                }
+
+                //get the label from the side panel
+                let infoField = document.querySelectorAll('.InfoItem_inline__dPVzd.styles_item__8bGe2');
+                for (let field of infoField) {
+                    //if the current field is the duration field:
+                    if (field.textContent.includes("Duration")) {
+                        console.log("Found the duration field.");
+
+                        //basically, the last child of the current field will have the important text
+                        duration = field.lastChild.textContent.trim();
+                    }
+                }
+            }
+
+
+            if (name) {
+                spellList.push({
+                    name: name,
+                    damage: damage,
+                    damageType: damageType,
+                    range: trueRange,
+                    hitDC: hitDC,
+                    duration: duration,
+                    description: description
+                });
+            }
+        };
+    }
+    return spellList;
+}

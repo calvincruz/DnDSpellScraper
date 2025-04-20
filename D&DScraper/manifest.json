@@ -1,0 +1,17 @@
+{
+    "manifest_version": 3,
+    "name": "D&D Beyond Spell Printer",
+    "version": "1.0",
+    "description": "Print a spell sheet from D&D Beyond character pages",
+    "permissions": ["activeTab", "scripting"],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "spellbook.png"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://www.dndbeyond.com/characters/*"],
+        "js": ["content.js"]
+      }
+    ]
+  }

@@ -3,7 +3,7 @@ const checkForUpdates = async () => {
     const currentVersion = chrome.runtime.getManifest().version;
     
     try {
-      const response = await fetch('https://raw.githubusercontent.com/yourname/repo/main/version.json');
+      const response = await fetch('https://raw.githubusercontent.com/calvincruz/DnDSpellScraper/main/version.json');
       const { latestVersion, downloadUrl } = await response.json();
       
       if (latestVersion > currentVersion) {

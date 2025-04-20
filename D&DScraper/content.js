@@ -93,20 +93,32 @@ async function extractSpellsFromPage() {
             let spellDamageEffectDamagesClass = spellDamageEffectClass.querySelector('.ddbc-spell-damage-effect__damages');
 
             //some spells have no damage
-            let damage;
+            let damagehealing;
             let damageType;
 
             //if the damage class exists
             if (spellDamageEffectDamagesClass) {
                 let diceContainerClass = spellDamageEffectDamagesClass.querySelector('.integrated-dice__container');
-                damage = diceContainerClass.querySelector('.ddbc-damage__value.ddbc-damage__value--dark-mode')?.textContent.trim();
+                if(diceContainerClass)
+                {
+                    damagehealing = diceContainerClass.textContent.trim();
+                }
                 //the aria label holds the damage type, it doesn't display it as text.
                 //have to take the label for the output table, which has the damage type as text
-                damageType = diceContainerClass.querySelector('.ddbc-damage-type-icon')?.ariaLabel.toString();
+                //check if the damage is null first
+                if(damagehealing)
+                {
+                    damageType = diceContainerClass.querySelector('.ddbc-damage-type-icon')?.ariaLabel.toString();
+                }
+                else
+                {
+                    damagehealing = "N/A";
+                    damageType = "N/A";
+                }
             }
             else {
                 //otherwise set the damage to N/A
-                damage = "N/A";
+                damagehealing = "N/A";
                 damageType = "N/A";
             }
 
@@ -178,6 +190,13 @@ async function extractSpellsFromPage() {
                         //basically, the last child of the current field will have the important text
                         duration = field.lastChild.textContent.trim();
                     }
+                    else if(field.textContent.includes("Range"))
+                    {
+                        let subContainer = field.querySelector('.InfoItem_value__rVPhW');
+                        console.log("Found the range field");
+
+                        trueRange = subContainer?.textContent;
+                    }
                 }
             }
 
@@ -185,7 +204,7 @@ async function extractSpellsFromPage() {
             if (name) {
                 spellList.push({
                     name: name,
-                    damage: damage,
+                    damagehealing: damagehealing,
                     damageType: damageType,
                     range: trueRange,
                     hitDC: hitDC,

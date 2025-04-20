@@ -94,7 +94,7 @@ async function extractSpellsFromPage() {
 
             //make sure the dice class exists
             if (diceContainerClass.length > 0) {
-                //for each die container on the screen
+                //for each die container for the spell
                 for (let die of diceContainerClass) {
                     //if we already found the damage or healing for the current spell, skip.
                     if(damagehealing)
@@ -108,7 +108,15 @@ async function extractSpellsFromPage() {
                         //have to take the label for the output table, which has the damage type as text
                         //check if the damage is null first
                         if (damagehealing) {
-                            damageType = die.querySelector('.ddbc-damage-type-icon')?.ariaLabel.toString();
+                            let typeclass = die.querySelector('.ddbc-damage-type-icon');
+                            if(typeclass && die.firstElementChild.className?.includes("damage"))
+                            {
+                                damageType = typeclass.ariaLabel?.trim();
+                            }
+                            else
+                            {
+                                damageType = "N/A";
+                            }
                         }
                         else {
                             damagehealing = "N/A";

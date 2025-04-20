@@ -84,6 +84,7 @@ async function extractSpellsFromPage() {
         let spellsLevel = levelContent.querySelector('.ct-spells-level');
         let spellsContent = spellsLevel.querySelector('.ct-spells-level__spells-content');
         let spells = spellsContent.querySelectorAll('.ct-spells-spell');
+        let currentLevel = level.textContent.trim();
 
         //for each spell in the list of spells under the level type:
         for (let spell of spells) {
@@ -209,6 +210,7 @@ async function extractSpellsFromPage() {
             if (name) {
                 spellList.push({
                     name: name,
+                    level: currentLevel,
                     damagehealing: damagehealing,
                     damageType: damageType,
                     range: trueRange,

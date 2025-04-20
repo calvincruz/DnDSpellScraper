@@ -33,7 +33,6 @@ function openSpells() {
     }
     if (elementToClick) {
         elementToClick.click();
-        console.log("Clicked:", elementToClick.textContent.trim());
     } else {
         console.warn("Element not found.");
     }
@@ -88,38 +87,39 @@ async function extractSpellsFromPage() {
 
         //for each spell in the list of spells under the level type:
         for (let spell of spells) {
-            let spellDamageClass = spell.querySelector('.ct-spells-spell__damage');
-            let spellDamageEffectClass = spellDamageClass.querySelector('.ddbc-spell-damage-effect.ddbc-spell-damage-effect--dark-mode');
-            let spellDamageEffectDamagesClass = spellDamageEffectClass.querySelector('.ddbc-spell-damage-effect__damages');
-
             //some spells have no damage
             let damagehealing;
             let damageType;
+            let diceContainerClass = spell.querySelectorAll('.integrated-dice__container');
 
-            //if the damage class exists
-            if (spellDamageEffectDamagesClass) {
-                let diceContainerClass = spellDamageEffectDamagesClass.querySelector('.integrated-dice__container');
-                if(diceContainerClass)
-                {
-                    damagehealing = diceContainerClass.textContent.trim();
-                }
-                //the aria label holds the damage type, it doesn't display it as text.
-                //have to take the label for the output table, which has the damage type as text
-                //check if the damage is null first
-                if(damagehealing)
-                {
-                    damageType = diceContainerClass.querySelector('.ddbc-damage-type-icon')?.ariaLabel.toString();
-                }
-                else
-                {
-                    damagehealing = "N/A";
-                    damageType = "N/A";
+            //make sure the dice class exists
+            if (diceContainerClass.length > 0) {
+                //for each die container on the screen
+                for (let die of diceContainerClass) {
+                    //if we already found the damage or healing for the current spell, skip.
+                    if(damagehealing)
+                    {
+                        continue;
+                    }
+                    //check the child element's class name
+                    if (die.firstElementChild.className?.includes("damage") || die.firstElementChild.className?.includes("heal")) {
+                        damagehealing = die.textContent.toString().trim();
+                        //the aria label holds the damage type, it doesn't display it as text.
+                        //have to take the label for the output table, which has the damage type as text
+                        //check if the damage is null first
+                        if (damagehealing) {
+                            damageType = die.querySelector('.ddbc-damage-type-icon')?.ariaLabel.toString();
+                        }
+                        else {
+                            damagehealing = "N/A";
+                            damageType = "N/A";
+                        }
+                    }
                 }
             }
             else {
-                //otherwise set the damage to N/A
-                damagehealing = "N/A";
                 damageType = "N/A";
+                damagehealing = "N/A";
             }
 
             //get the range of the spell
@@ -185,15 +185,12 @@ async function extractSpellsFromPage() {
                 for (let field of infoField) {
                     //if the current field is the duration field:
                     if (field.textContent.includes("Duration")) {
-                        console.log("Found the duration field.");
 
                         //basically, the last child of the current field will have the important text
                         duration = field.lastChild.textContent.trim();
                     }
-                    else if(field.textContent.includes("Range"))
-                    {
+                    else if (field.textContent.includes("Range")) {
                         let subContainer = field.querySelector('.InfoItem_value__rVPhW');
-                        console.log("Found the range field");
 
                         trueRange = subContainer?.textContent;
                     }

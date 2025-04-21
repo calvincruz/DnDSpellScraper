@@ -158,7 +158,10 @@ async function extractSpellsFromPage() {
                 hitDC = emptyHitClass?.textContent.trim();
             }
             else if (saveClass) {
-                hitDC = saveClass?.textContent.trim();
+                text = saveClass?.textContent.trim();
+                let hitDCnum = text.slice(3, text.length);
+                let hitDCsave = text.slice(0, 3);
+                hitDC = hitDCsave.toString().toUpperCase() + " " + hitDCnum.toString();
             }
 
 

@@ -33,8 +33,12 @@ document.getElementById("printSpells").addEventListener("click", async () => {
     const spellsByLevel = {};
     response.spells.forEach(spell => {
       let level = spell.level;
-      // Clean level name (remove any appended text)
-      level = level.replace(/NameTimeRangeHit.*/, ' ').trim();
+      // Clean level name: remove everything after slots
+      level = level.replace(/Slots.*/, ' ').trim();
+
+      //if it's a cantrip, remove everything after Name
+      level = level.replace(/Name.*/, ' ').trim();
+
       if (!spellsByLevel[level]) {
         spellsByLevel[level] = [];
       }
@@ -44,7 +48,7 @@ document.getElementById("printSpells").addEventListener("click", async () => {
     // Generate clean HTML tables
     const tablesHtml = Object.entries(spellsByLevel).map(([level, spells]) => {
       // Clean level name for header
-      const cleanLevel = level.replace(/NameTimeRangeHit.*/, ' ').trim();
+      const cleanLevel = level.replace(/SlotsNameTimeRangeHit.*/, ' ').trim();
       return `
           <div class="spell-level-section">
               <h2> </h2>
@@ -82,17 +86,19 @@ document.getElementById("printSpells").addEventListener("click", async () => {
           </div>
           `;
     }).join('');
-
     const htmlContent = `
       <!DOCTYPE html>
       <html>
           <head>
+              <style>
+              @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');
+              </style>
               <title>D&D Spell Sheet</title>
               <style>
                   body {
                       background-color: #121212;
                       color: #e0e0e0;
-                      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                      font-family: 'Noto Sans Mono', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                       margin: 0;
                       padding: 20px;
                   }
@@ -127,7 +133,16 @@ document.getElementById("printSpells").addEventListener("click", async () => {
                   .spell-table td {
                       padding: 10px;
                       border-bottom: 1px solid #333;
+                      vertical-align: middle;
+                  }
+                  .spell-description {
                       vertical-align: top;
+                      min-width: 300px;
+                      max-width: 800px;
+                      white-space: normal;
+                      word-wrap: break-word;
+                      line-height: 1.5;
+                      padding: 12px;
                   }
                   .spell-table tr:nth-child(even) {
                       background-color: #1e1e1e;
@@ -136,14 +151,6 @@ document.getElementById("printSpells").addEventListener("click", async () => {
                       font-size: 1.3em;
                       font-weight: bold;
                       color: #ff6666;
-                  }
-                  .spell-description {
-                      min-width: 300px;
-                      max-width: 800px;
-                      white-space: normal;
-                      word-wrap: break-word;
-                      line-height: 1.5;
-                      padding: 12px;
                   }
                   @media print {
                       body {

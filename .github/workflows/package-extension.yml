@@ -3,7 +3,7 @@ name: Package and Release Extension
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
+  workflow_dispatch: #WORK PLEASE
 
 jobs:
   build-and-release:

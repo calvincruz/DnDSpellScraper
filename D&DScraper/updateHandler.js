@@ -1,7 +1,3 @@
-// This runs in the about:blank window's context
-
-console.log("Handler loaded!"); // Check in blob window's console
-
 // updateHandler.js
 document.getElementById('zipBtn').addEventListener('click', () => {
     chrome.runtime.sendMessage({ 

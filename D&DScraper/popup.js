@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.tabs.sendMessage(tab.id, { action: "getSpells" }, resolve);
       });
 
-      console.log("Response from getSpells:", response);
 
       if (!response?.spells?.length) {
         throw new Error("No spells data received or empty spell list");
@@ -187,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </html>`;
 
         printWindow.document.open();
-        console.log(htmlContent);
         printWindow.document.write(htmlContent);
         printWindow.document.close();
 

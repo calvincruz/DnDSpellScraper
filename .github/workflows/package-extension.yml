@@ -14,7 +14,7 @@ jobs:
 
     - name: Zip D&DScraper folder
       run: |
-        cd ./D&DScraper
+        cd ${{ github.workspace }}/D&DSpellScraper
         zip -r ../D&DScraper.zip ./*
 
     - name: Get current version from version.json

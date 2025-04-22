@@ -10,7 +10,7 @@ async function checkForUpdates() {
     try {
         const currentVersion = chrome.runtime.getManifest().version;
         const response = await fetch('https://raw.githubusercontent.com/calvincruz/DnDSpellScraper/main/D%26DScraper/version.json');
-        
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -34,7 +34,7 @@ async function checkForUpdates() {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("Received message:", request.type);
-    
+
     switch (request.type) {
         case "check_update":
             checkForUpdates().then(() => {
@@ -42,9 +42,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     type: "update_available",
                     updateAvailable: true,
                     ...pendingUpdate
-                } : { 
+                } : {
                     type: "no_update",
-                    updateAvailable: false 
+                    updateAvailable: false
                 };
                 console.log("Sending response:", response);
                 sendResponse(response);
@@ -62,22 +62,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 pendingUpdate = null;
                 return;
             }
-            const downloadType = request.format;
-            const url = pendingUpdate.downloadOptions[downloadType];
+            const url = pendingUpdate.downloadOptions["ZIP"];
             if (!url) {
                 console.error("Invalid download format:", request.format);
                 return;
             }
 
-            const extension = ".zip";
-            const filename = `D&DScraper${extension}`;
-            
+            const filename = `D&DSpellScraper.zip`;
+
             console.log("Starting download:", filename);
             chrome.downloads.download({
                 url: url,
                 filename: filename,
                 conflictAction: 'overwrite',
-                saveAs: false
+                saveAs: true
             }, (downloadId) => {
                 if (chrome.runtime.lastError) {
                     console.error("Download failed:", chrome.runtime.lastError);

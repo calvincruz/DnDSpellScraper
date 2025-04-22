@@ -88,8 +88,8 @@ async function extractSpellsFromPage() {
         //for each spell in the list of spells under the level type:
         for (let spell of spells) {
             //some spells have no damage
-            let damagehealing;
-            let damageType;
+            let damagehealing = 0;
+            let damageType = "force damage";
             let diceContainerClass = spell.querySelectorAll('.integrated-dice__container');
 
             //make sure the dice class exists
@@ -97,7 +97,7 @@ async function extractSpellsFromPage() {
                 //for each die container for the spell
                 for (let die of diceContainerClass) {
                     //if we already found the damage or healing for the current spell, skip.
-                    if (damagehealing) {
+                    if (damagehealing !== null && damageType !== null) {
                         break;
                     }
                     //check the child element's class name
@@ -107,6 +107,7 @@ async function extractSpellsFromPage() {
                             let typeclass = die.querySelector('.ddbc-damage-type-icon');
                             if (typeclass && die.firstElementChild.className?.includes("damage")) {
                                 damageType = typeclass.ariaLabel?.trim();
+                                break;
                             }
                             else {
                                 damageType = "N/A";
@@ -122,6 +123,7 @@ async function extractSpellsFromPage() {
                         console.log("healing value is " + damagehealing);
                         if (damagehealing) {
                             damageType = "healing";
+                            break;
                         }
                         else {
                             damagehealing = "ISUNDEFINED";

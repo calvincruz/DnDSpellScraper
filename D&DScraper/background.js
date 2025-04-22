@@ -1,6 +1,5 @@
 let pendingUpdate = null;
 
-console.log("Background script loaded");
 
 // Initialize interval once
 const CHECK_INTERVAL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -16,16 +15,12 @@ async function checkForUpdates() {
         }
 
         const updateData = await response.json();
-        console.log("Current version:", currentVersion, "Latest version:", updateData?.latestVersion);
 
         if (updateData.latestVersion !== currentVersion) {
             pendingUpdate = {
                 latestVersion: updateData.latestVersion,
                 downloadOptions: updateData.downloadOptions
             };
-            console.log("Update available:", pendingUpdate);
-        } else {
-            console.log("No updates available");
         }
     } catch (error) {
         console.error("Update check failed:", error);
@@ -33,8 +28,6 @@ async function checkForUpdates() {
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log("Received message:", request.type);
-
     switch (request.type) {
         case "check_update":
             checkForUpdates().then(() => {
@@ -46,7 +39,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     type: "no_update",
                     updateAvailable: false
                 };
-                console.log("Sending response:", response);
                 sendResponse(response);
             });
             return true; // Required for async response
@@ -58,7 +50,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             }
 
             if (request.format === "cancel") {
-                console.log("Update canceled by user");
                 pendingUpdate = null;
                 return;
             }
@@ -70,7 +61,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             const filename = `D&DSpellScraper.zip`;
 
-            console.log("Starting download:", filename);
             chrome.downloads.download({
                 url: url,
                 filename: filename,
@@ -79,8 +69,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             }, (downloadId) => {
                 if (chrome.runtime.lastError) {
                     console.error("Download failed:", chrome.runtime.lastError);
-                } else {
-                    console.log("Download started with ID:", downloadId);
                 }
             });
 
@@ -95,5 +83,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // Clean up on extension unload
 chrome.runtime.onSuspend.addListener(() => {
     clearInterval(updateCheckInterval);
-    console.log("Background script unloaded");
 });

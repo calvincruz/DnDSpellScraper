@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } catch (error) {
       console.error("Spell extraction error:", error);
-      alert("Failed to generate spell sheet:\n" + error.message);
+      alert("Failed to generate spell sheet. Try refreshing the page and running the extension again.");
     }
   });
 });

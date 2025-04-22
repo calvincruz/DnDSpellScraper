@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 const spells = await extractSpellsFromPage();
                 sendResponse({ spells });
             } catch (error) {
-                console.log("Error extracting spells:", error);
+                console.error("Error extracting spells:", error);
                 sendResponse({ spells: [] });
             }
         })();

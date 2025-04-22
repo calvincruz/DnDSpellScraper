@@ -98,7 +98,7 @@ async function extractSpellsFromPage() {
                 for (let die of diceContainerClass) {
                     //if we already found the damage or healing for the current spell, skip.
                     if (damagehealing) {
-                        continue;
+                        break;
                     }
                     //check the child element's class name
                     if (die.firstElementChild.className?.includes("damage")) {
@@ -119,11 +119,12 @@ async function extractSpellsFromPage() {
                     }
                     else if (die.firstElementChild.className?.includes("heal")) {
                         damagehealing = die.textContent.toString().trim();
+                        console.log("healing value is " + damagehealing);
                         if (damagehealing) {
                             damageType = "healing";
                         }
                         else {
-                            damagehealing = "N/A";
+                            damagehealing = "ISUNDEFINED";
                             damageType = "N/A";
                         }
                     }

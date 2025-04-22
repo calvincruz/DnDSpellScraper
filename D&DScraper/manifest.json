@@ -3,7 +3,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "name": "D&D Beyond Spell Printer",
+  "name": "D&D Beyond Spell Printer TEST BRANCH",
   "version": "1.2.2",
   "description": "Print a spell sheet from D&D Beyond character pages",
   "permissions": [

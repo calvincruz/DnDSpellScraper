@@ -3,7 +3,7 @@ name: Package and Release Extension
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   build-and-release:
@@ -28,24 +28,16 @@ jobs:
       run: echo "::set-output name=version::$(echo '${{ steps.get_version.outputs.content }}' | jq -r '.latestVersion')"
 
     - name: Create GitHub Release
-      uses: actions/create-release@v1
+      uses: ncipollo/release-action@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.extract_version.outputs.version }}
-        release_name: Release v${{ steps.extract_version.outputs.version }}
+        tag: v${{ steps.extract_version.outputs.version }}
+        name: Release v${{ steps.extract_version.outputs.version }}
         body: |
           Automated release of the D&D Spell Printer extension.
           Includes the latest changes from the main branch.
+        artifacts: D\&DScraper.zip
+        artifactContentType: application/zip
         draft: false
         prerelease: false
-
-    - name: Upload ZIP asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: D&DScraper.zip
-        asset_name: D&DScraper.zip
-        asset_content_type: application/zip

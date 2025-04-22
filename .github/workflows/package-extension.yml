@@ -1,0 +1,51 @@
+name: Package and Release Extension
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Zip D&DScraper folder
+      run: |
+        cd ./D&DScraper
+        zip -r ../dndscraperspells.zip ./*
+
+    - name: Get current version from version.json
+      id: get_version
+      uses: actions/read-file@v3
+      with:
+        path: D&DScraper/version.json
+
+    - name: Extract version
+      id: extract_version
+      run: echo "::set-output name=version::$(echo '${{ steps.get_version.outputs.content }}' | jq -r '.latestVersion')"
+
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.extract_version.outputs.version }}
+        release_name: Release v${{ steps.extract_version.outputs.version }}
+        body: |
+          Automated release of the D&D Spell Printer extension.
+          Includes the latest changes from the main branch.
+        draft: false
+        prerelease: false
+
+    - name: Upload ZIP asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dndscraperspells.zip
+        asset_name: D&DScraper_v${{ steps.extract_version.outputs.version }}.zip
+        asset_content_type: application/zip

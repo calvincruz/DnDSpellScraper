@@ -89,7 +89,7 @@ async function extractSpellsFromPage() {
         for (let spell of spells) {
             //some spells have no damage
             let damagehealing = 0;
-            let damageType = "force damage";
+            let damageType;
             let diceContainerClass = spell.querySelectorAll('.integrated-dice__container');
 
             //make sure the dice class exists
@@ -126,7 +126,7 @@ async function extractSpellsFromPage() {
                             break;
                         }
                         else {
-                            damagehealing = "ISUNDEFINED";
+                            damagehealing = "N/A";
                             damageType = "N/A";
                         }
                     }

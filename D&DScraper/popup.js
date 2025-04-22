@@ -54,39 +54,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const tablesHtml = Object.entries(spellsByLevel).map(([level, spells]) => {
           const cleanLevel = level.replace(/SlotsNameTimeRangeHit.*/, ' ').trim();
           return `
-          <div class="spell-level-section">
-            <h2></h2>
-            <table class="spell-table">
-              <thead>
-                <tr>
-                  <th style="width:15%">Spell - ${cleanLevel}</th>
-                  <th style="width:10%">Damage/Heal</th>
-                  <th style="width:10%">Type</th>
-                  <th style="width:6%">Hit/DC</th>
-                  <th style="width:6%">Range</th>
-                  <th style="width:8%">Duration</th>
-                  <th style="width:45%">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${spells.map(spell => {
-                  const damageType = spell.damageType || 'N/A';
-                  const typeColor = damageTypeColors[damageType] || '#e0e0e0';
-                  const description = (spell.description || '').replace(/\n/g, '<br>');
-                  return `
+            <div class="spell-level-section">
+              <h2></h2>
+              <table class="spell-table">
+                <thead>
                   <tr>
-                    <td><span class="spell-name">${spell.name === "N/A" ? '--' : spell.name}</span></td>
-                    <td>${spell.damagehealing === "N/A" ? '--' : spell.damagehealing}</td>
-                    <td style="color:${typeColor}">${spell.damageType === "N/A" ? '--' : spell.damageType}</td>
-                    <td>${spell.hitDC === "N/A" ? '--' : spell.hitDC}</td>
-                    <td>${spell.range === "N/A" ? '--' : spell.range}</td>
-                    <td>${spell.duration === "N/A" ? '--' : spell.duration}</td>
-                    <td class="spell-description">${description === "N/A" ? '--' : description}</td>
-                  </tr>`;
-                }).join('')}
-              </tbody>
-            </table>
-          </div>`;
+                    <th style="width:15%">Spell - ${cleanLevel}</th>
+                    <th style="width:10%">Damage/Heal</th>
+                    <th style="width:10%">Type</th>
+                    <th style="width:6%">Hit/DC</th>
+                    <th style="width:6%">Range</th>
+                    <th style="width:8%">Duration</th>
+                    <th style="width:45%">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${spells.map(spell => {
+                    const damageType = spell.damageType || 'N/A';
+                    const typeColor = damageTypeColors[damageType] || '#e0e0e0';
+                    const damageHealValue = spell.damagehealing === "N/A" ? '--' : spell.damagehealing;
+                    const damageHealColor = spell.damageType === 'healing' ? damageTypeColors['healing'] : '#e0e0e0'; // Default color if not healing
+                    const description = (spell.description || '').replace(/\n/g, '<br>');
+                    return `
+                      <tr>
+                        <td><span class="spell-name">${spell.name === "N/A" ? '--' : spell.name}</span></td>
+                        <td style="color:${damageHealColor}">${damageHealValue}</td>
+                        <td style="color:${typeColor}">${spell.damageType === "N/A" ? '--' : spell.damageType}</td>
+                        <td>${spell.hitDC === "N/A" ? '--' : spell.hitDC}</td>
+                        <td>${spell.range === "N/A" ? '--' : spell.range}</td>
+                        <td>${spell.duration === "N/A" ? '--' : spell.duration}</td>
+                        <td class="spell-description">${description === "N/A" ? '--' : description}</td>
+                      </tr>`;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>`;
         }).join('');
 
         const htmlContent = `<!DOCTYPE html>

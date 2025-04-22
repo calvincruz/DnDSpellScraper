@@ -97,24 +97,18 @@ async function extractSpellsFromPage() {
                 //for each die container for the spell
                 for (let die of diceContainerClass) {
                     //if we already found the damage or healing for the current spell, skip.
-                    if(damagehealing)
-                    {
+                    if (damagehealing) {
                         continue;
                     }
                     //check the child element's class name
-                    if (die.firstElementChild.className?.includes("damage") || die.firstElementChild.className?.includes("heal")) {
+                    if (die.firstElementChild.className?.includes("damage")) {
                         damagehealing = die.textContent.toString().trim();
-                        //the aria label holds the damage type, it doesn't display it as text.
-                        //have to take the label for the output table, which has the damage type as text
-                        //check if the damage is null first
                         if (damagehealing) {
                             let typeclass = die.querySelector('.ddbc-damage-type-icon');
-                            if(typeclass && die.firstElementChild.className?.includes("damage"))
-                            {
+                            if (typeclass && die.firstElementChild.className?.includes("damage")) {
                                 damageType = typeclass.ariaLabel?.trim();
                             }
-                            else
-                            {
+                            else {
                                 damageType = "N/A";
                             }
                         }
@@ -123,11 +117,17 @@ async function extractSpellsFromPage() {
                             damageType = "N/A";
                         }
                     }
+                    else if (die.firstElementChild.className?.includes("heal")) {
+                        damagehealing = die.textContent.toString().trim();
+                        if (damagehealing) {
+                            damageType = "healing";
+                        }
+                        else {
+                            damagehealing = "N/A";
+                            damageType = "N/A";
+                        }
+                    }
                 }
-            }
-            else {
-                damageType = "N/A";
-                damagehealing = "N/A";
             }
 
             //get the range of the spell

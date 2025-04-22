@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <button id="printSpells">Create Your Grimoire?</button>
-    <script src="popup.js"></script>
-    <script src="background.js"></script>
-  </body>
+<body>
+  <button id="printSpells">Create Your Grimoire?</button>
+
+  <div id="updateContainer" class="update-container" style="display:none;">
+    <div class="update-dialog">
+      <h3 class="update-title">New Version Available!</h3>
+      <p class="update-message" id="updateMessage"></p>
+      <button id="zipBtn" class="update-button zip-btn">Download ZIP</button>
+      <button id="cancelBtn" class="update-button cancel-btn">Maybe Later</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
 </html>

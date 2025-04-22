@@ -1,4 +1,3 @@
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "getSpells") {
         // Mark as async and handle properly
@@ -7,7 +6,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 const spells = await extractSpellsFromPage();
                 sendResponse({ spells });
             } catch (error) {
-                console.error("Error extracting spells:", error);
+                console.log("Error extracting spells:", error);
                 sendResponse({ spells: [] });
             }
         })();

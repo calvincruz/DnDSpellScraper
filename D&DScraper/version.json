@@ -1,6 +1,6 @@
 {
     "latestVersion": "1.2.0",
     "downloadOptions": {
-      "ZIP": "https://github.com/calvincruz/DnDSpellScraper/releases/latest/download/D&DScraper.zip"
+      "ZIP": "https://github.com/calvincruz/DnDSpellScraper/archive/refs/tags/v1.2.0.zip"
     }
-  }
+}

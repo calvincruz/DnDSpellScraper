@@ -97,7 +97,7 @@ async function extractSpellsFromPage() {
                 //for each die container for the spell
                 for (let die of diceContainerClass) {
                     //if we already found the damage or healing for the current spell, skip.
-                    if (damagehealing !== null && damageType !== null) {
+                    if (damagehealing) {
                         continue;
                     }
                     //check the child element's class name
@@ -105,28 +105,21 @@ async function extractSpellsFromPage() {
                         damagehealing = die.textContent.toString().trim();
                         if (damagehealing) {
                             let typeclass = die.querySelector('.ddbc-damage-type-icon');
-                            if (typeclass && die.firstElementChild.className?.includes("damage")) {
+                            if (typeclass) {
                                 damageType = typeclass.ariaLabel?.trim();
-                                break;
-                            }
-                            else {
+                            } else {
                                 damageType = "N/A";
                             }
-                        }
-                        else {
+                        } else {
                             damagehealing = "N/A";
                             damageType = "N/A";
                         }
-                    }
-                    else if (die.firstElementChild.className?.includes("heal")) {
+                    } else if (die.firstElementChild.className?.includes("heal")) {
                         damagehealing = die.textContent.toString().trim();
-                        console.log("healing value is " + damagehealing);
                         if (damagehealing) {
-                            damageType = "healing";
-                            break;
-                        }
-                        else {
-                            damagehealing = "N/A";
+                            damageType = "healing"; // Set damageType to "healing" for healing spells
+                        } else {
+                            damagehealing = "N/A"; // Or perhaps an empty string "" if that's more appropriate
                             damageType = "N/A";
                         }
                     }

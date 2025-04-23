@@ -127,7 +127,11 @@ async function extractSpellsFromPage() {
                 
                 //if we go through all of the die for the spell and we still don't have a value,
                 //set them to N/A.
-                if(!damagehealing)
+                if(damagehealing)
+                {
+                    console.log("Damagehealing is good");
+                }
+                else
                 {
                     damagehealing = "N/A";
                     damageType = "N/A";

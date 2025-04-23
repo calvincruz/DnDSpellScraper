@@ -98,7 +98,7 @@ async function extractSpellsFromPage() {
                 for (let die of diceContainerClass) {
                     //if we already found the damage or healing for the current spell, skip.
                     if (damagehealing !== null && damageType !== null) {
-                        break;
+                        continue;
                     }
                     //check the child element's class name
                     if (die.firstElementChild.className?.includes("damage")) {

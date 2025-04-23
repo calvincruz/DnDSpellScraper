@@ -88,7 +88,7 @@ async function extractSpellsFromPage() {
         //for each spell in the list of spells under the level type:
         for (let spell of spells) {
             //some spells have no damage
-            let damagehealing = 0;
+            let damagehealing;
             let damageType;
             let diceContainerClass = spell.querySelectorAll('.integrated-dice__container');
 

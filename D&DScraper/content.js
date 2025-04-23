@@ -136,6 +136,7 @@ async function extractSpellsFromPage() {
                 }
             }
 
+            //if there are no die containers for a spell, logic will skip here, and it wont damage or heal.
             if (damagehealing) {
                 console.log("Damagehealing is good");
             }

@@ -123,10 +123,6 @@ async function extractSpellsFromPage() {
                             damageType = "N/A";
                         }
                     }
-                    else
-                    {
-                        continue;
-                    }
                 }
                 
                 //if we go through all of the die for the spell and we still don't have a value,

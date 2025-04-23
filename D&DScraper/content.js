@@ -128,6 +128,14 @@ async function extractSpellsFromPage() {
                         continue;
                     }
                 }
+                
+                //if we go through all of the die for the spell and we still don't have a value,
+                //set them to N/A.
+                if(!damagehealing)
+                {
+                    damagehealing = "N/A";
+                    damageType = "N/A";
+                }
             }
 
             //get the range of the spell

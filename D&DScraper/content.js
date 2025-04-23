@@ -123,6 +123,11 @@ async function extractSpellsFromPage() {
                             damageType = "N/A";
                         }
                     }
+                    else
+                    {
+                        damagehealing = "N/A";
+                        damageType = "N/A";
+                    }
                 }
             }
 

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     floatingHeaderContainer.className = 'floating-header-styled'; // New class name
     // floatingHeaderContainer.style.display = 'none';
     document.body.appendChild(floatingHeaderContainer);
-    console.log(floatingHeaderContainer);
+    console.log("Floatingheadercontainer ", floatingHeaderContainer);
 
     let currentFloatingHeader = null;
   

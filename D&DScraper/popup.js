@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               /* —— Floating header styles —— */
               .floating-header-styled {
-              position: relative;
+              position: sticky;
               top: 0;
               background: #1a1a1a;
               color: #ff4444;

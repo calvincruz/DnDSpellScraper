@@ -248,7 +248,22 @@ async function extractSpellsFromPage() {
             {
                 if(castTime)
                 {
-                    description = castTime.trim().replace("1", "").replace("a", "A").replace("b", "B").replace("r", "R") + "\n" + description.trim();
+                    castTime = castTime.trim().replace("1", "");
+                    if(castTime.includes("r"))
+                    {
+                        castTime = castTime.trim().replace("r", "R");
+                    }
+                    else if(castTime.includes("b"))
+                    {
+                        castTime = castTime.trim().replace("b", "B");
+                    }
+                    else
+                    {
+                        castTime = castTime.trim().replace("a", "A");
+                    }
+                    
+                    
+                    description = castTime + "\n" + description.trim();
                 }
             }
             if(!duration) {

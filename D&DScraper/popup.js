@@ -116,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
               }
               .spell-level-section {
                 margin-bottom: 40px;
+                position: relative;
               }
               .spell-table {
                 border-collapse: collapse;
@@ -124,6 +125,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
                 table-layout: fixed;
               }
+              
+              /* Sticky header styles */
+              .spell-table thead {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 0;
+                z-index: 10;
+              }
+              
               .spell-table th {
                 background-color: #1a1a1a;
                 color: #ff4444;
@@ -131,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 text-align: left;
                 border-bottom: 2px solid #ff4444;
               }
+              
               .spell-table td {
                 padding: 10px;
                 border-bottom: 1px solid #333;
@@ -153,6 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-weight: bold;
                 color: #ff6666;
               }
+              
               @media print {
                 body {
                   background-color: white !important;
@@ -191,10 +203,12 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.write(htmlContent);
         printWindow.document.close();
 
-        setTimeout(() => {
-          printWindow.print();
-          setTimeout(() => printWindow.close(), 500);
-        }, 500);
+        // Instead of inline script, use this approach after creating the document
+        printWindow.addEventListener('load', () => {
+          // Force a reflow to ensure sticky headers are applied correctly
+          printWindow.scrollTo(0, 0);
+          printWindow.document.body.offsetHeight; // Force a reflow
+        });
       };
 
       // Check for updates

@@ -184,6 +184,7 @@ async function extractSpellsFromPage() {
             let name = spellLabelClass.querySelector('.styles_spellName__wX3ll')?.textContent.trim();
             let description = "N/A";
             let duration = "N/A";
+            let castTime = "N/A";
 
             //first, search the page for the notes part of the spell list
             let search = spell.querySelector('.ddbc-note-components');
@@ -220,8 +221,36 @@ async function extractSpellsFromPage() {
 
                         trueRange = subContainer?.textContent;
                     }
+                    else if (field.textContent.includes("Cast Time")) {
+                        castTime = field.lastChild.textContent.trim();
+                    }
                 }
             }
+
+            if(!description) {
+                description = "N/A";
+            }
+            else
+            {
+                if(castTime)
+                {
+                    description = castTime.trim() + " " + description.trim();
+                }
+            }
+            if(!duration) {
+                duration = "N/A";
+            }
+            if(!castTime) {
+                castTime = "N/A";
+            }
+            if(!trueRange) {
+                trueRange = "N/A";
+            }
+            if(!hitDC) {
+                hitDC = "N/A";
+            }
+            
+            
 
 
             if (name) {

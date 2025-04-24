@@ -23,24 +23,24 @@ document.addEventListener('DOMContentLoaded', () => {
     
         if (rect.top <= 0 && rect.bottom > 0) {
           console.log('Relevant section in view:', level);
-          // if (currentFloatingHeader !== level) {
-          //   console.log('Updating floating header to:', level);
-          //   floatingHeaderContainer.textContent = `Spell - ${level}`;
-          //   floatingHeaderContainer.className = 'floating-header-styled'; // Apply the class
-          //   currentFloatingHeader = level;
-          // }
+          if (currentFloatingHeader !== level) {
+            console.log('Updating floating header to:', level);
+            floatingHeaderContainer.textContent = `Spell - ${level}`;
+            floatingHeaderContainer.className = 'floating-header-styled'; // Apply the class
+            currentFloatingHeader = level;
+          }
           foundRelevantSection = true;
           return; // Exit early since we found the current header
         }
       }
     
       // If the loop completes without finding a relevant section, hide the header
-      if (!foundRelevantSection) {
-        console.log('No relevant section in view, hiding header');
-        floatingHeaderContainer.className = '.floating-header-styled.hidden'; // Apply the class
-        floatingHeaderContainer.style.display = 'none';
-        currentFloatingHeader = null;
-      }
+      // if (!foundRelevantSection) {
+      //   console.log('No relevant section in view, hiding header');
+      //   floatingHeaderContainer.className = '.floating-header-styled.hidden'; // Apply the class
+      //   floatingHeaderContainer.style.display = 'none';
+      //   currentFloatingHeader = null;
+      // }
     }
   
     window.addEventListener('scroll', updateFloatingHeader);

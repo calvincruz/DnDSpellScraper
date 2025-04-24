@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const spellLevelSections = document.querySelectorAll('.spell-level-section');
     const floatingHeaderContainer = document.createElement('div');
+
     floatingHeaderContainer.className = 'floating-header-styled'; // New class name
     // floatingHeaderContainer.style.display = 'none';
     document.body.appendChild(floatingHeaderContainer);
@@ -11,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('updateFloatingHeader called');
       let foundRelevantSection = false;
       for (const section of spellLevelSections) {
-        console.log('Checking section:', section);
         const table = section.querySelector('.spell-table');
         if (!table) continue;
         const thead = table.querySelector('thead');
@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     
       // If the loop completes without finding a relevant section, hide the header
-      // if (!foundRelevantSection) {
-      //   console.log('No relevant section in view, hiding header');
-      //   floatingHeaderContainer.className = '.floating-header-styled.hidden'; // Apply the class
-      //   floatingHeaderContainer.style.display = 'none';
-      //   currentFloatingHeader = null;
-      // }
+      if (!foundRelevantSection) {
+        console.log('No relevant section in view, hiding header');
+        floatingHeaderContainer.className = '.floating-header-styled.hidden'; // Apply the class
+        floatingHeaderContainer.style.display = 'none';
+        currentFloatingHeader = null;
+      }
     }
   
     window.addEventListener('scroll', updateFloatingHeader);

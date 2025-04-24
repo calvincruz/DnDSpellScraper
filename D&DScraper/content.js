@@ -221,7 +221,7 @@ async function extractSpellsFromPage() {
 
                         trueRange = subContainer?.textContent;
                     }
-                    else if (field.textContent.includes("Cast Time")) {
+                    else if (field.textContent.includes("Cast")) {
                         castTime = field.lastChild.textContent.trim();
                     }
                 }

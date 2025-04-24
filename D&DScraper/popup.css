@@ -82,4 +82,8 @@
   /* Space between sections */
   position: relative;
   /* Ensure the sticky header works correctly */
+  border: 1px solid #ccc;
+  /* Optional: Add a border for clarity */
+  padding: 10px;
+  /* Optional: Add padding for better spacing */
 }

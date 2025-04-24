@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const spellLevelSections = document.querySelectorAll('.spell-level-section');
     const floatingHeaderContainer = document.createElement('div');
     floatingHeaderContainer.className = 'floating-header-styled'; // New class name
-    floatingHeaderContainer.style.display = 'none';
+    // floatingHeaderContainer.style.display = 'none';
     document.body.appendChild(floatingHeaderContainer);
     console.log(floatingHeaderContainer);
 
@@ -23,12 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
         if (rect.top <= 0 && rect.bottom > 0) {
           console.log('Relevant section in view:', level);
-          if (currentFloatingHeader !== level) {
-            console.log('Updating floating header to:', level);
-            floatingHeaderContainer.textContent = `Spell - ${level}`;
-            floatingHeaderContainer.className = 'floating-header-styled'; // Apply the class
-            currentFloatingHeader = level;
-          }
+          // if (currentFloatingHeader !== level) {
+          //   console.log('Updating floating header to:', level);
+          //   floatingHeaderContainer.textContent = `Spell - ${level}`;
+          //   floatingHeaderContainer.className = 'floating-header-styled'; // Apply the class
+          //   currentFloatingHeader = level;
+          // }
           foundRelevantSection = true;
           return; // Exit early since we found the current header
         }

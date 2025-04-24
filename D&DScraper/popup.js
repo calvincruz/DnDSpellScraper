@@ -89,130 +89,46 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
         }).join('');
 
-        const htmlContent = 
+        const simplifiedHTMLContent = 
         `<!DOCTYPE html>
           <html>
           <head>
             <meta charset="utf-8">
-            <title>D&D Spell Sheet</title>
+            <title>Sticky Header Test</title>
             <style>
-              /* —— Base styles —— */
-              @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');
-              html, body {
+              body {
                 margin: 0;
                 padding: 20px;
-                background-color: #121212;
-                color: #e0e0e0;
-                font-family: 'Noto Sans Mono', monospace;
                 overflow-y: auto;
-                display: flex; /* Make body a flex container */
-                flex-direction: column; /* Stack children vertically */
-                min-height: 100vh; /* Ensure body takes at least the full viewport height */
               }
-              h1 {
-                color: #ff4444;
-                text-align: center;
-                margin-bottom: 20px;
-                text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
-              }
-
-              /* —— Crucial sticky‐header rules —— */
-              .spell-level-section {
-                margin-bottom: 40px;
-              }
-              .table-wrapper {
-                overflow-x: auto;
-              }
-              .spell-table {
-                width: 100%;
-                border-collapse: collapse;
-                table-layout: fixed;
-              }
-              .spell-table thead tr {
+              .sticky-header {
                 position: sticky;
                 top: 0;
-                background: #1a1a1a;
-                z-index: 10;
-              }
-              .spell-table thead th {
-                background: #1a1a1a;
-                color: #ff4444;
-                padding: 12px;
-                border-bottom: 2px solid #ff4444;
-              }
-
-              /* —— Rest of your table styling —— */
-              .spell-table td {
+                background: red;
+                color: white;
                 padding: 10px;
-                border-bottom: 1px solid #333;
-                vertical-align: middle;
-              }
-              .spell-table tr:nth-child(even) {
-                background-color: #1e1e1e;
-              }
-              .spell-name {
-                font-size: 1.3em;
-                font-weight: bold;
-                color: #ff6666;
-              }
-              .spell-description {
-                vertical-align: top;
-                min-width: 300px;
-                max-width: 800px;
-                line-height: 1.5;
-                word-wrap: break-word;
-                padding: 12px;
-              }
-
-              /* —— Floating header styles —— */
-              .floating-header-styled {
-                position: sticky;
-                top: 0px;
-                background: #1a1a1a;
-                color: #ff4444;
-                padding: 12px;
-                z-index: 20;
-                font-weight: bold;
-                border-bottom: 2px solid #ff4444;
+                z-index: 9999;
                 width: 100%;
                 box-sizing: border-box;
-                left: 0px;
-                flex-shrink: 0; /* Prevent it from shrinking */
+                text-align: center;
               }
-
-              /* —— Your @media print rules —— */
-              @media print {
-                body {
-                  background-color: white !important;
-                  color: black !important;
-                }
-                .spell-table th {
-                  background-color: #f1f1f1 !important;
-                  color: #d32f2f !important;
-                }
-                .spell-table tr:nth-child(even) {
-                  background-color: #f9f9f9 !important;
-                }
-                .spell-name {
-                  color: #d32f2f !important;
-                }
-                h2 {
-                  color: #d32f2f !important;
-                }
-                .spell-level-section {
-                  page-break-inside: avoid;
-                }
-                .spell-description {
-                  min-width: 400px !important;
-                }
+              .tall-element {
+                height: 500px;
+                margin-bottom: 20px;
+                background: #f0f0f0;
+                border: 1px solid #ccc;
+                text-align: center;
+                line-height: 500px;
               }
             </style>
           </head>
           <body>
-            <h1>SPELL GRIMOIRE</h1>
-            ${tablesHtml}
-
-            <script src="sticky-header.js"></script>
+            <div class="sticky-header">STICKY HEADER</div>
+            <div class="tall-element">Tall Element 1</div>
+            <div class="tall-element">Tall Element 2</div>
+            <div class="tall-element">Tall Element 3</div>
+            <div class="tall-element">Tall Element 4</div>
+            <div class="tall-element">Tall Element 5</div>
           </body>
           </html>`;
 
@@ -220,9 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.write(htmlContent);
         printWindow.document.close();
 
-        // ——— Optional: auto-print and close ———
-        // printWindow.print();
-        // printWindow.close();
+
       };
 
       // Check for updates

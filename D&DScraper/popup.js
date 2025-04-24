@@ -174,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
               .spell-name {
                 font-size: 1.3em;
                 font-weight: bold;
+                color: ${spellNameColor};
               }
               
               /* Spell casting time colors */

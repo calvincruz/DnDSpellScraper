@@ -50,3 +50,21 @@
   .cancel-btn {
     background: #666666;
   }
+
+  .table-wrapper {
+    position: relative;
+    overflow: auto; /* Enable scrolling */
+    max-height: 400px; /* Set a max height for the table */
+  }
+
+  .spell-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .spell-table th {
+    position: sticky;
+    top: 0; /* Stick to the top of the table wrapper */
+    background-color: #1a1a1a; /* Background color for the header */
+    z-index: 10; /* Ensure it stays above other content */
+  }

@@ -185,6 +185,7 @@ async function extractSpellsFromPage() {
             let description = "N/A";
             let duration = "N/A";
             let castTime = "N/A";
+            let spellType = "N/A";
 
             //first, search the page for the notes part of the spell list
             let search = spell.querySelector('.ddbc-note-components');
@@ -223,6 +224,19 @@ async function extractSpellsFromPage() {
                     }
                     else if (field.textContent.includes("Cast")) {
                         castTime = field.lastChild.textContent.trim();
+                        if(castTime.includes("reaction")) {
+                            spellType = "Reaction";
+                        }
+                        else if(castTime.includes("bonus")) {
+                            spellType = "Bonus Action";
+                        }
+                        else if(castTime.includes("Action")) {
+                            spellType = "Action";
+                        }
+                        else
+                        {
+                            spellType = "N/A";
+                        }
                     }
                 }
             }
@@ -234,7 +248,7 @@ async function extractSpellsFromPage() {
             {
                 if(castTime)
                 {
-                    description = castTime.trim() + " " + description.trim();
+                    description = castTime.trim() + "\n" + description.trim();
                 }
             }
             if(!duration) {
@@ -262,6 +276,7 @@ async function extractSpellsFromPage() {
                     range: trueRange,
                     hitDC: hitDC,
                     duration: duration,
+                    spellType: spellType,
                     description: description
                 });
             }

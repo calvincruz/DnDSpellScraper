@@ -73,11 +73,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     const damageType = spell.damageType || 'N/A';
                     const typeColor = damageTypeColors[damageType] || '#e0e0e0';
                     const damageHealValue = spell.damagehealing === "N/A" ? '--' : spell.damagehealing;
-                    const damageHealColor = spell.damageType === 'healing' ? damageTypeColors['healing'] : '#e0e0e0'; // Default color if not healing
+                    const damageHealColor = spell.damageType === 'healing' ? damageTypeColors['healing'] : '#e0e0e0';
                     const description = (spell.description || '').replace(/\n/g, '<br>');
+
+                    // Determine spell name color based on cast time
+                    let spellNameColor = '#ff6666'; // Default red color
+                    if (spell.castTime) {
+                      if (spell.castTime.toLowerCase().includes('bonus action')) {
+                        spellNameColor = '#4444ff'; // Blue for bonus action
+                      } else if (spell.castTime.toLowerCase().includes('reaction')) {
+                        spellNameColor = '#aaaaaa'; // Light grey for reaction
+                      }
+                      // Keep red for action (default)
+                    }
+
                     return `
                       <tr>
-                        <td><span class="spell-name">${spell.name === "N/A" ? '--' : spell.name}</span></td>
+                        <td><span class="spell-name" style="color:${spellNameColor}">${spell.name === "N/A" ? '--' : spell.name}</span></td>
                         <td style="color:${damageHealColor}">${damageHealValue}</td>
                         <td style="color:${typeColor}">${spell.damageType === "N/A" ? '--' : spell.damageType}</td>
                         <td>${spell.hitDC === "N/A" ? '--' : spell.hitDC}</td>
@@ -165,6 +177,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 color: #ff6666;
               }
               
+              /* Spell casting time colors */
+              .action-spell {
+                color: #ff6666 !important; /* Red for action */
+              }
+              .bonus-spell {
+                color: #4444ff !important; /* Blue for bonus action */
+              }
+              .reaction-spell {
+                color: #aaaaaa !important; /* Light grey for reaction */
+              }
+              
               @media print {
                 body {
                   background-color: white !important;
@@ -176,9 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 .spell-table tr:nth-child(even) {
                   background-color: #f9f9f9 !important;
-                }
-                .spell-name {
-                  color: #d32f2f !important;
                 }
                 h2 {
                   color: #d32f2f !important;

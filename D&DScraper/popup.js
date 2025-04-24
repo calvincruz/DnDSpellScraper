@@ -25,9 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const openPrintWindow = (data) => {
         const printWindow = window.open("", "_blank");
-        if (!printWindow) {
-          throw new Error("Popup window blocked. Please allow popups for this site.");
-        }
+        if (!printWindow) throw new Error("Popup window blocked. Please allow popups.");
 
         const damageTypeColors = {
           'acid damage': '#00ff00',
@@ -100,12 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
             <style>
               /* —— Base styles —— */
               @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');
-              body {
+              html, body {
                 margin: 0;
                 padding: 20px;
                 background-color: #121212;
                 color: #e0e0e0;
                 font-family: 'Noto Sans Mono', monospace;
+                overflow-y: auto;  /* ensure the page itself scrolls vertically */
               }
               h1 {
                 color: #ff4444;
@@ -117,11 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
               /* —— Crucial sticky‐header rules —— */
               .spell-level-section {
                 margin-bottom: 40px;
-                /* no overflow on this element */
+                /* no vertical overflow here */
               }
               .table-wrapper {
-                /* we only want *horizontal* scrolling here */
-                overflow-x: auto;
+                overflow-x: auto;   /* allow horizontal scroll only */
                 /* remove any max-height or overflow-y */
               }
               .spell-table {
@@ -130,13 +128,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 table-layout: fixed;
               }
               .spell-table thead th {
-                position: sticky;     /* ⬅️ make the <th> stick */
-                top: 0;                /* ⬅️ pin it to the very top of the viewport */
+                position: sticky;   /* make each <th> stick */
+                top: 0;             /* pin to top of viewport */
                 background: #1a1a1a;
                 color: #ff4444;
                 padding: 12px;
                 border-bottom: 2px solid #ff4444;
-                z-index: 10;          /* stay above the body rows */
+                z-index: 10;        /* stay above rows */
               }
 
               /* —— Rest of your table styling —— */
@@ -162,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 padding: 12px;
               }
 
-              /* —— your @media print rules can remain below —— */
+              /* —— Your @media print rules can remain below —— */
               @media print {
                 body {
                   background-color: white !important;
@@ -200,9 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.write(htmlContent);
         printWindow.document.close();
 
-        // ——— TEMPORARILY disable auto‐print so you can scroll and verify the headers —
-        printWindow.print();
-        printWindow.close();
+        // ——— Optional: auto-print and close ———
+        // printWindow.print();
+        // printWindow.close();
       };
 
       // Check for updates

@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       if (spell.spellType.includes('Bonus')) {
                         spellNameColor = '#4444ff'; // Blue for bonus action
                       } else if (spell.spellType.includes('Reaction')) {
-                        spellNameColor = '#aaaaaa'; // Light grey for reactionn
+                        spellNameColor = '#ffcc00'; // Gold/yellow for reactionn
                       }
                       // Keep red for action (default)
                     }

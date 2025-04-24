@@ -133,9 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </html>`;
 
         printWindow.document.open();
-        printWindow.document.write(htmlContent);
+        printWindow.document.write(simplifiedHTMLContent);
         printWindow.document.close();
-
 
       };
 

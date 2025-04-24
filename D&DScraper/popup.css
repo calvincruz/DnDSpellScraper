@@ -68,3 +68,8 @@
     background-color: #1a1a1a; /* Background color for the header */
     z-index: 10; /* Ensure it stays above other content */
   }
+
+  .spell-level-section {
+    margin-bottom: 40px; /* Space between sections */
+    position: relative; /* Ensure the sticky header works correctly */
+  }

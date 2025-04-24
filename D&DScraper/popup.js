@@ -117,20 +117,27 @@ document.addEventListener('DOMContentLoaded', () => {
               }
               .spell-level-section {
                 margin-bottom: 40px;
+                position: relative;
+              }
+              .table-wrapper {
+                position: relative;
+                overflow-x: auto;    /* allow horizontal scroll */
+                overflow-y: visible;  /* let the page scroll vertically */
               }
               .spell-table {
-                border-collapse: collapse;
                 width: 100%;
-                margin: 0 auto;
-                box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+                border-collapse: collapse;
                 table-layout: fixed;
               }
-              .spell-table th {
-                background-color: #1a1a1a;
+              .spell-table thead th {
+                position: sticky;
+                top: 0;               /* stick to top of viewport */
+                background: #1a1a1a;
                 color: #ff4444;
                 padding: 12px;
                 text-align: left;
                 border-bottom: 2px solid #ff4444;
+                z-index: 10;          /* float above the body rows */
               }
               .spell-table td {
                 padding: 10px;

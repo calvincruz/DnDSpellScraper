@@ -163,17 +163,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
               /* —— Floating header styles —— */
               .floating-header {
-                position: sticky;
-                top: 0;
-                background: #1a1a1a;
-                color: #ff4444;
-                padding: 12px;
-                z-index: 20; /* Higher than table header */
-                font-weight: bold;
-                border-bottom: 2px solid #ff4444;
-                display: none; /* Initially hidden */
-                width: 100%; /* Make it span the width */
-                box-sizing: border-box; /* Ensure padding doesn't increase width */
+              position: fixed; /* Changed from sticky to fixed for testing */
+              top: 0;
+              left: 0; /* Ensure it's positioned at the left edge */
+              background: #1a1a1a;
+              color: #ff4444;
+              padding: 12px;
+              z-index: 20; /* Higher than table header */
+              font-weight: bold;
+              border-bottom: 2px solid #ff4444;
+              display: none; /* Initially hidden */
+              width: 100%; /* Make it span the width */
+              box-sizing: border-box; /* Ensure padding doesn't increase width */
               }
 
               /* —— Your @media print rules —— */

@@ -55,8 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="spell-level-section">
               <div class="table-wrapper">
                 <table class="spell-table">
-                  <thead>
-                    <tr>
+                    <thead data-level="${cleanLevel}"> <tr>
                       <th style="width:15%">Spell - ${cleanLevel}</th>
                       <th style="width:10%">Damage/Heal</th>
                       <th style="width:10%">Type</th>
@@ -192,6 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <body>
             <h1>SPELL GRIMOIRE</h1>
             ${tablesHtml}
+
+            <script src="sticky-header.js"></script>
           </body>
           </html>`;
 
@@ -200,7 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.close();
 
         // ——— Optional: auto-print and close ———
-        printWindow.print();
+        // printWindow.print();
+        // printWindow.close();
       };
 
       // Check for updates

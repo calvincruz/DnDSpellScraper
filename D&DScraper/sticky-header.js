@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
           if (currentFloatingHeader !== level) {
             console.log('Updating floating header to:', level);
             floatingHeaderContainer.textContent = `Spell - ${level}`;
-            floatingHeaderContainer.style.display = 'block';
             floatingHeaderContainer.className = 'floating-header-styled'; // Apply the class
             currentFloatingHeader = level;
           }
@@ -38,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // If the loop completes without finding a relevant section, hide the header
       if (!foundRelevantSection) {
         console.log('No relevant section in view, hiding header');
+        floatingHeaderContainer.className = '.floating-header-styled.hidden'; // Apply the class
         floatingHeaderContainer.style.display = 'none';
         currentFloatingHeader = null;
       }

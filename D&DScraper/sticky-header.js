@@ -34,12 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     
       // If the loop completes without finding a relevant section, hide the header
-      if (!foundRelevantSection) {
-        console.log('No relevant section in view, hiding header');
-        floatingHeaderContainer.className = '.floating-header-styled.hidden'; // Apply the class
-        floatingHeaderContainer.style.display = 'none';
-        currentFloatingHeader = null;
-      }
+      // if (!foundRelevantSection) {
+      //   console.log('No relevant section in view, hiding header');
+      //   floatingHeaderContainer.className = '.floating-header-styled.hidden'; // Apply the class
+      //   floatingHeaderContainer.style.display = 'none';
+      //   currentFloatingHeader = null;
+      // }
     }
   
     window.addEventListener('scroll', updateFloatingHeader);

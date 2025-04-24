@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <head>
             <meta charset="utf-8">
             <title>D&D Spell Sheet</title>
+            <link rel="stylesheet" href="popup.css">
             <style>
               /* —— Base styles —— */
               @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');

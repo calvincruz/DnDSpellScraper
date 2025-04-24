@@ -123,6 +123,23 @@ document.addEventListener('DOMContentLoaded', () => {
               .table-wrapper {
                 overflow-x: auto;
               }
+
+              /* —— Floating header styles —— */
+              .floating-header-styled {
+                position: sticky;
+                top: 0px;
+                background: #1a1a1a;
+                color: #ff4444;
+                padding: 12px;
+                z-index: 20;
+                font-weight: bold;
+                border-bottom: 2px solid #ff4444;
+                width: 100%;
+                box-sizing: border-box;
+                left: 0px;
+                flex-shrink: 0; /* Prevent it from shrinking */
+              }
+                
               .spell-table {
                 width: 100%;
                 border-collapse: collapse;
@@ -164,21 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 padding: 12px;
               }
 
-              /* —— Floating header styles —— */
-              .floating-header-styled {
-                position: sticky;
-                top: 0px;
-                background: #1a1a1a;
-                color: #ff4444;
-                padding: 12px;
-                z-index: 20;
-                font-weight: bold;
-                border-bottom: 2px solid #ff4444;
-                width: 100%;
-                box-sizing: border-box;
-                left: 0px;
-                flex-shrink: 0; /* Prevent it from shrinking */
-              }
 
               .floating-header-styled.hidden {
                 display: none;

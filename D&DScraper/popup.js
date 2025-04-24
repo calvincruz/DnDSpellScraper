@@ -95,14 +95,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const htmlContent = `<!DOCTYPE html>
           <html>
           <head>
+            <meta charset="utf-8">
+            <title>D&D Spell Sheet</title>
             <style>
+              /* —— Base styles —— */
               @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');
               body {
-                background-color: #121212;
-                color: #e0e0e0;
-                font-family: 'Noto Sans Mono', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 margin: 0;
                 padding: 20px;
+                background-color: #121212;
+                color: #e0e0e0;
+                font-family: 'Noto Sans Mono', monospace;
               }
               h1 {
                 color: #ff4444;
@@ -110,18 +113,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 margin-bottom: 20px;
                 text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
               }
-              h2 {
-                color: #ff6666;
-                margin: 40px 0 15px 0;
-                font-size: 1.3em;
-              }
+
+              /* —— Crucial sticky‐header rules —— */
               .spell-level-section {
                 margin-bottom: 40px;
-                position: relative;
+                /* no overflow on this element */
               }
               .table-wrapper {
-                overflow-x: auto;   /* horizontal only */
-                /* no max-height, no overflow-y */
+                /* we only want *horizontal* scrolling here */
+                overflow-x: auto;
+                /* remove any max-height or overflow-y */
               }
               .spell-table {
                 width: 100%;
@@ -129,27 +130,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 table-layout: fixed;
               }
               .spell-table thead th {
-                position: sticky;
-                top: 0;                       /* pin to top of viewport */
+                position: sticky;     /* ⬅️ make the <th> stick */
+                top: 0;                /* ⬅️ pin it to the very top of the viewport */
                 background: #1a1a1a;
                 color: #ff4444;
-                z-index: 10;
                 padding: 12px;
                 border-bottom: 2px solid #ff4444;
+                z-index: 10;          /* stay above the body rows */
               }
+
+              /* —— Rest of your table styling —— */
               .spell-table td {
                 padding: 10px;
                 border-bottom: 1px solid #333;
                 vertical-align: middle;
-              }
-              .spell-description {
-                vertical-align: top;
-                min-width: 300px;
-                max-width: 800px;
-                white-space: normal;
-                word-wrap: break-word;
-                line-height: 1.5;
-                padding: 12px;
               }
               .spell-table tr:nth-child(even) {
                 background-color: #1e1e1e;
@@ -159,6 +153,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-weight: bold;
                 color: #ff6666;
               }
+              .spell-description {
+                vertical-align: top;
+                min-width: 300px;
+                max-width: 800px;
+                line-height: 1.5;
+                word-wrap: break-word;
+                padding: 12px;
+              }
+
+              /* —— your @media print rules can remain below —— */
               @media print {
                 body {
                   background-color: white !important;
@@ -185,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
               }
             </style>
-            <title>D&D Spell Sheet</title>
           </head>
           <body>
             <h1>SPELL GRIMOIRE</h1>
@@ -197,10 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.write(htmlContent);
         printWindow.document.close();
 
-        setTimeout(() => {
-          printWindow.print();
-          setTimeout(() => printWindow.close(), 500);
-        }, 500);
+        // ——— TEMPORARILY disable auto‐print so you can scroll and verify the headers —
+        // printWindow.print();
+        // printWindow.close();
       };
 
       // Check for updates

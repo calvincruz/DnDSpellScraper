@@ -1,75 +1,85 @@
 .update-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 9999;
-    display: none; /* Initially hidden */
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .update-dialog {
-    background: #121212;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    text-align: center;
-  }
-  
-  .update-title {
-    color: #ff4444;
-    margin-top: 0;
-    margin-bottom: 15px;
-  }
-  
-  .update-message {
-    color: #e0e0e0;
-    margin-bottom: 20px;
-  }
-  
-  .update-button {
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    margin: 4px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-weight: bold;
-    width: 100%;
-  }
-  
-  .zip-btn {
-    background: #4444ff;
-  }
-  
-  .cancel-btn {
-    background: #666666;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 9999;
+  display: none;
+  /* Initially hidden */
+  justify-content: center;
+  align-items: center;
+}
 
-  .table-wrapper {
-    position: relative;
-    overflow: auto; /* Enable scrolling */
-    max-height: 400px; /* Set a max height for the table */
-  }
+.update-dialog {
+  background: #121212;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
 
-  .spell-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+.update-title {
+  color: #ff4444;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
 
-  .spell-table th {
-    position: sticky;
-    top: 0; /* Stick to the top of the table wrapper */
-    background-color: #1a1a1a; /* Background color for the header */
-    z-index: 10; /* Ensure it stays above other content */
-  }
+.update-message {
+  color: #e0e0e0;
+  margin-bottom: 20px;
+}
 
-  .spell-level-section {
-    margin-bottom: 40px; /* Space between sections */
-    position: relative; /* Ensure the sticky header works correctly */
-  }
+.update-button {
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin: 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  width: 100%;
+}
+
+.zip-btn {
+  background: #4444ff;
+}
+
+.cancel-btn {
+  background: #666666;
+}
+
+.table-wrapper {
+  position: relative;
+  overflow: auto;
+  /* Enable scrolling */
+  max-height: 400px;
+  /* Set a max height for the table */
+}
+
+.spell-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.spell-table th {
+  position: sticky;
+  top: 0;
+  /* Stick to the top of the viewport */
+  background-color: #1a1a1a;
+  /* Background color for the header */
+  z-index: 10;
+  /* Ensure it stays above other content */
+  color: #ff4444;
+  /* Text color for better visibility */
+}
+
+.spell-level-section {
+  margin-bottom: 40px;
+  /* Space between sections */
+  position: relative;
+  /* Ensure the sticky header works correctly */
+}

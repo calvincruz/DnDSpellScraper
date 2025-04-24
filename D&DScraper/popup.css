@@ -53,11 +53,7 @@
 }
 
 .table-wrapper {
-  position: relative;
-  overflow: auto;
-  /* Enable scrolling */
-  max-height: 400px;
-  /* Set a max height for the table */
+  overflow-x: auto;
 }
 
 .spell-table {
@@ -66,10 +62,12 @@
   position: relative;
 }
 
-.spell-table thead {
+.spell-table thead th {
   position: sticky;
   top: 0;
+  background: #1a1a1a;
   z-index: 10;
+  color: #ff4444;
 }
 
 .spell-table th {

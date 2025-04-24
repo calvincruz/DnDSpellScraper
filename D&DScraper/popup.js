@@ -200,8 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.close();
 
         // ——— Optional: auto-print and close ———
-        // printWindow.print();
-        // printWindow.close();
+        printWindow.print();
+        printWindow.close();
       };
 
       // Check for updates

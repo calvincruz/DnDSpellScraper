@@ -116,25 +116,28 @@ document.addEventListener('DOMContentLoaded', () => {
               /* —— Crucial sticky‐header rules —— */
               .spell-level-section {
                 margin-bottom: 40px;
-                /* no vertical overflow here */
+                position: relative;
               }
               .table-wrapper {
+                position: relative;
                 overflow-x: auto;   /* allow horizontal scroll only */
-                /* remove any max-height or overflow-y */
               }
               .spell-table {
                 width: 100%;
                 border-collapse: collapse;
                 table-layout: fixed;
+                position: relative;
+              }
+              .spell-table thead {
+                position: sticky;
+                top: 0;
+                z-index: 10;
               }
               .spell-table thead th {
-                position: sticky;   /* make each <th> stick */
-                top: 0;             /* pin to top of viewport */
                 background: #1a1a1a;
                 color: #ff4444;
                 padding: 12px;
                 border-bottom: 2px solid #ff4444;
-                z-index: 10;        /* stay above rows */
               }
 
               /* —— Rest of your table styling —— */

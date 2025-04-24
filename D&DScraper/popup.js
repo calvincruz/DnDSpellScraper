@@ -89,12 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
         }).join('');
 
-        const htmlContent = `<!DOCTYPE html>
+        const htmlContent = 
+        `<!DOCTYPE html>
           <html>
           <head>
             <meta charset="utf-8">
             <title>D&D Spell Sheet</title>
-            <link rel="stylesheet" href="popup.css">
             <style>
               /* —— Base styles —— */
               @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 background-color: #121212;
                 color: #e0e0e0;
                 font-family: 'Noto Sans Mono', monospace;
-                overflow-y: auto;  /* ensure the page itself scrolls vertically */
+                overflow-y: auto;   /* ensure the page itself scrolls vertically */
               }
               h1 {
                 color: #ff4444;
@@ -161,7 +161,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 padding: 12px;
               }
 
-              /* —— Your @media print rules can remain below —— */
+              /* —— Floating header styles —— */
+              .floating-header {
+                position: sticky;
+                top: 0;
+                background: #1a1a1a;
+                color: #ff4444;
+                padding: 12px;
+                z-index: 20; /* Higher than table header */
+                font-weight: bold;
+                border-bottom: 2px solid #ff4444;
+                display: none; /* Initially hidden */
+                width: 100%; /* Make it span the width */
+                box-sizing: border-box; /* Ensure padding doesn't increase width */
+              }
+
+              /* —— Your @media print rules —— */
               @media print {
                 body {
                   background-color: white !important;

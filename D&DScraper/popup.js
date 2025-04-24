@@ -201,7 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // ——— Optional: auto-print and close ———
         printWindow.print();
-        printWindow.close();
       };
 
       // Check for updates

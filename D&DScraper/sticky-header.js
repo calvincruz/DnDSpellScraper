@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (currentFloatingHeader !== level) {
             console.log('Updating floating header to:', level);
             floatingHeaderContainer.textContent = `Spell - ${level}`;
+            floatingHeaderContainer.style.display = 'block';
             floatingHeaderContainer.className = 'floating-header-styled'; // Apply the class
             currentFloatingHeader = level;
           }

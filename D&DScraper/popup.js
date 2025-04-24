@@ -120,9 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 position: relative;
               }
               .table-wrapper {
-                position: relative;
-                overflow-x: auto;    /* allow horizontal scroll */
-                overflow-y: visible;  /* let the page scroll vertically */
+                overflow-x: auto;   /* horizontal only */
+                /* no max-height, no overflow-y */
               }
               .spell-table {
                 width: 100%;
@@ -131,13 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
               }
               .spell-table thead th {
                 position: sticky;
-                top: 0;               /* stick to top of viewport */
+                top: 0;                       /* pin to top of viewport */
                 background: #1a1a1a;
                 color: #ff4444;
+                z-index: 10;
                 padding: 12px;
-                text-align: left;
                 border-bottom: 2px solid #ff4444;
-                z-index: 10;          /* float above the body rows */
               }
               .spell-table td {
                 padding: 10px;

@@ -201,8 +201,8 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.close();
 
         // ——— TEMPORARILY disable auto‐print so you can scroll and verify the headers —
-        // printWindow.print();
-        // printWindow.close();
+        printWindow.print();
+        printWindow.close();
       };
 
       // Check for updates

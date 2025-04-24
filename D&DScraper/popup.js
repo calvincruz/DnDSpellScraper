@@ -77,12 +77,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     const description = (spell.description || '').replace(/\n/g, '<br>');
 
                     // Determine spell name color based on cast time
-                    let spellNameColor = '#ff6666'; // Default red color
-                    if (spell.castTime) {
-                      if (spell.castTime.toLowerCase().includes('bonus action')) {
+                    let spellNameColor = '#ff6666'; // Default red color for Action
+                    if (spell.spellType) {
+                      if (spell.spellType.includes('Bonus')) {
                         spellNameColor = '#4444ff'; // Blue for bonus action
-                      } else if (spell.castTime.toLowerCase().includes('reaction')) {
-                        spellNameColor = '#aaaaaa'; // Light grey for reaction
+                      } else if (spell.spellType.includes('Reaction')) {
+                        spellNameColor = '#aaaaaa'; // Light grey for reactionn
                       }
                       // Keep red for action (default)
                     }
@@ -174,18 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
               .spell-name {
                 font-size: 1.3em;
                 font-weight: bold;
-                color: ${spellNameColor};
-              }
-              
-              /* Spell casting time colors */
-              .action-spell {
-                color: #ff6666 !important; /* Red for action */
-              }
-              .bonus-spell {
-                color: #4444ff !important; /* Blue for bonus action */
-              }
-              .reaction-spell {
-                color: #aaaaaa !important; /* Light grey for reaction */
               }
               
               @media print {

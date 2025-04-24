@@ -116,21 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
               /* —— Crucial sticky‐header rules —— */
               .spell-level-section {
                 margin-bottom: 40px;
-                position: relative;
               }
               .table-wrapper {
-                position: relative;
-                overflow-x: auto;   /* allow horizontal scroll only */
+                overflow-x: auto;
               }
               .spell-table {
                 width: 100%;
                 border-collapse: collapse;
                 table-layout: fixed;
-                position: relative;
               }
-              .spell-table thead {
+              .spell-table thead tr {
                 position: sticky;
                 top: 0;
+                background: #1a1a1a;
                 z-index: 10;
               }
               .spell-table thead th {

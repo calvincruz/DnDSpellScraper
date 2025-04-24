@@ -104,7 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 background-color: #121212;
                 color: #e0e0e0;
                 font-family: 'Noto Sans Mono', monospace;
-                overflow-y: auto;   /* ensure the page itself scrolls vertically */
+                overflow-y: auto;
+                display: flex; /* Make body a flex container */
+                flex-direction: column; /* Stack children vertically */
+                min-height: 100vh; /* Ensure body takes at least the full viewport height */
               }
               h1 {
                 color: #ff4444;
@@ -163,20 +166,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
               /* —— Floating header styles —— */
               .floating-header-styled {
-              position: sticky;
-              top: 0;
-              background: #1a1a1a;
-              color: #ff4444;
-              padding: 12px;
-              z-index: 20; /* Higher than table header */
-              font-weight: bold;
-              border-bottom: 2px solid #ff4444;
-              width: 100%;
-              box-sizing: border-box;
-            }
-            .floating-header-styled.hidden {
-              display: none;
-            }
+                position: sticky;
+                top: 0px;
+                background: #1a1a1a;
+                color: #ff4444;
+                padding: 12px;
+                z-index: 20;
+                font-weight: bold;
+                border-bottom: 2px solid #ff4444;
+                width: 100%;
+                box-sizing: border-box;
+                left: 0px;
+                flex-shrink: 0; /* Prevent it from shrinking */
+              }
 
               /* —— Your @media print rules —— */
               @media print {

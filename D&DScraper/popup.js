@@ -124,31 +124,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 overflow-x: auto;
               }
 
-              /* —— Floating header styles —— */
-              .floating-header-styled {
-                position: sticky;
-                top: 0px;
-                background: #1a1a1a;
-                color: #ff4444;
-                padding: 12px;
-                z-index: 20;
-                font-weight: bold;
-                border-bottom: 2px solid #ff4444;
-                width: 100%;
-                box-sizing: border-box;
-                left: 0px;
-                flex-shrink: 0; /* Prevent it from shrinking */
-              }
-                
               .spell-table {
                 width: 100%;
                 border-collapse: collapse;
                 table-layout: fixed;
               }
+
               .spell-table thead tr {
                 position: sticky;
-                top: 0;
-                background: #1a1a1a;
+                top: 0px; /* Be explicit with the top value */
+                background-color: #1a1a1a; /* Use background-color for clarity */
                 z-index: 10;
               }
               .spell-table thead th {
@@ -179,11 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 line-height: 1.5;
                 word-wrap: break-word;
                 padding: 12px;
-              }
-
-
-              .floating-header-styled.hidden {
-                display: none;
               }
 
               /* —— Your @media print rules —— */
@@ -217,8 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <body>
             <h1>SPELL GRIMOIRE</h1>
             ${tablesHtml}
-
-            <script src="sticky-header.js"></script>
           </body>
           </html>`;
 

@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const cleanLevel = level.replace(/SlotsNameTimeRangeHit.*/, ' ').trim();
           return `
             <div class="spell-level-section">
-              <h2></h2>
               <div class="table-wrapper">
                 <table class="spell-table">
                   <thead>

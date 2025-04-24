@@ -1,23 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const spellLevelSections = document.querySelectorAll('.spell-level-section');
     const floatingHeaderContainer = document.createElement('div');
-    floatingHeaderContainer.classList.add('floating-header');
-    floatingHeaderContainer.style.position = 'sticky';
-    floatingHeaderContainer.style.top = '0';
-    floatingHeaderContainer.style.background = '#1a1a1a';
-    floatingHeaderContainer.style.color = '#ff4444';
-    floatingHeaderContainer.style.padding = '12px';
-    floatingHeaderContainer.style.zIndex = '20'; /* Higher than table header */
-    floatingHeaderContainer.style.fontWeight = 'bold';
-    floatingHeaderContainer.style.borderBottom = '2px solid #ff4444';
-    floatingHeaderContainer.style.display = 'none'; /* Initially hidden */
+    floatingHeaderContainer.className = 'floating-header-styled'; // New class name
+    floatingHeaderContainer.style.display = 'none';
     document.body.appendChild(floatingHeaderContainer);
-    console.log('Floating header container created:', floatingHeaderContainer);
-  
+    console.log(floatingHeaderContainer);
+
     let currentFloatingHeader = null;
   
     function updateFloatingHeader() {
       console.log('updateFloatingHeader called');
+      let foundRelevantSection = false;
       for (const section of spellLevelSections) {
         console.log('Checking section:', section);
         const table = section.querySelector('.spell-table');
@@ -27,21 +20,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const level = thead.dataset.level;
         const rect = section.getBoundingClientRect();
         console.log('Section rect:', rect, 'Level:', level);
-  
+    
         if (rect.top <= 0 && rect.bottom > 0) {
           console.log('Relevant section in view:', level);
           if (currentFloatingHeader !== level) {
             console.log('Updating floating header to:', level);
             floatingHeaderContainer.textContent = `Spell - ${level}`;
-            floatingHeaderContainer.style.display = 'block';
+            floatingHeaderContainer.className = 'floating-header-styled'; // Apply the class
             currentFloatingHeader = level;
           }
-          return;
+          foundRelevantSection = true;
+          return; // Exit early since we found the current header
         }
       }
-      console.log('No relevant section in view, hiding header');
-      floatingHeaderContainer.style.display = 'none';
-      currentFloatingHeader = null;
+    
+      // If the loop completes without finding a relevant section, hide the header
+      if (!foundRelevantSection) {
+        console.log('No relevant section in view, hiding header');
+        floatingHeaderContainer.style.display = 'none';
+        currentFloatingHeader = null;
+      }
     }
   
     window.addEventListener('scroll', updateFloatingHeader);

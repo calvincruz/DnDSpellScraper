@@ -261,6 +261,11 @@ async function extractSpellsFromPage() {
                     {
                         castTime = castTime.trim().replace("a", "A");
                     }
+
+                    if(description.includes("take a Bonus Action"))
+                    {
+                        castTime += ", Bonus action";
+                    }
                     
                     
                     description = castTime + "\n" + description.trim();

@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const damageType = spell.damageType || 'N/A';
                     const typeColor = damageTypeColors[damageType] || '#e0e0e0';
                     const damageHealValue = spell.damagehealing === "N/A" ? '--' : spell.damagehealing;
-                    const damageHealColor = spell.damageType === 'healing' ? damageTypeColors['healing'] : '#e0e0e0';
+                    const damageHealColor = typeColor;
                     const description = (spell.description || '').replace(/\n/g, '<br>');
 
                     // Determine spell name color based on cast time

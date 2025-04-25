@@ -248,7 +248,7 @@ async function extractSpellsFromPage() {
             {
                 if(castTime)
                 {
-                    castTime = castTime.trim().replace("1", "");
+                    castTime = castTime.trim().replace("1 ", "");
                     if(castTime.includes("r"))
                     {
                         castTime = castTime.trim().replace("r", "R");

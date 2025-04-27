@@ -12,7 +12,8 @@
     "activeTab",
     "scripting",
     "downloads",
-    "windows"
+    "windows",
+    "storage"
   ],
   "host_permissions": [
     "https://raw.githubusercontent.com/*"

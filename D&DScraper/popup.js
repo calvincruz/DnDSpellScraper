@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let spellDataForPrint = null; // Store the spell data
 
+  chrome.storage.local.set({logs: 'empty'});
+
   const logToFile = (level, message, ...args) => {
       const timestamp = new Date().toISOString();
       const logEntry = `[${timestamp}] ${level.toUpperCase()}: ${message} ${args.length > 0 ? JSON.stringify(args) : ''}\n`;
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to download logs
   const downloadLogs = () => {
+    if(chrome.storage.local){
       chrome.storage.local.get({ logs: '' }, (data) => {
           const jsonLogs = JSON.stringify({ logs: data.logs.split('\n').filter(Boolean) }, null, 2);
           const blob = new Blob([jsonLogs], { type: 'application/json' });
@@ -37,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
           // Optionally clear logs after download:
           // chrome.storage.local.set({ logs: '' });
       });
+    }
   };
 
   if (downloadLogsButton) {

@@ -3,7 +3,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "name": "D&D Beyond Grimoire Creator",
+  "name": "D&D Beyond Grimoire Creator TEST BRANCH",
   "version": "1.4.4",
   "description": "Create a grimoire from your spells on your D&D Beyond character page!",
   "permissions": [

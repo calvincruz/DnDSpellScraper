@@ -269,6 +269,10 @@ document.addEventListener('DOMContentLoaded', () => {
               window.open('https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md&title=[Feature Request] Your Suggestion Title', '_blank');
             })
           }
+          else
+          {
+            throw new Error("suggestionbuttoninnewwindow did not return true");
+          }
         }
         );
       };

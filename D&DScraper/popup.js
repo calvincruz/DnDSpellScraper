@@ -262,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log("Event listener attached to suggest button."); // Add this line
           suggestButtonInNewWindow.addEventListener('click', () => {
             window.open('https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md&title=[Feature Request] Your Suggestion Title', '_blank');
+            window.close();
           })
         }
 

@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      /* Your existing styles */
+      #logViewer { /* You can remove this if you only want the download button */
+          margin-top: 20px;
+          border: 1px solid #ccc;
+          padding: 10px;
+          height: 200px;
+          overflow-y: scroll;
+          font-family: monospace;
+          font-size: 0.8em;
+          background-color: #f4f4f4;
+      }
+      #clearLogs { /* You can remove this button as well */
+          margin-top: 10px;
+          padding: 8px 15px;
+          cursor: pointer;
+      }
+      #downloadLogs {
+          margin-top: 10px;
+          padding: 8px 15px;
+          cursor: pointer;
+      }
+  </style>
+  </head>
 <body>
   <button id="printSpells">Create Your Grimoire?</button>
   <div id="updateContainer" class="update-container" style="display:none;">
@@ -9,6 +34,8 @@
       <button id="zipBtn" class="update-button zip-btn">Download ZIP</button>
       <button id="cancelBtn" class="update-button cancel-btn">Keep current version</button>
     </div>
+    <button id="downloadLogs">Download Logs</button>
+
   </div>
   <script src="popup.js"></script>
 </body>

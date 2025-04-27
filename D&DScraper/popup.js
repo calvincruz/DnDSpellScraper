@@ -244,7 +244,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <title>D&D Spell Sheet</title>
           </head>
           <body>
-            <h1>SPELL GRIMOIRE</h1>
+            <h1
+            <div class="glitch-wrapper">
+              <div class="glitch" data-glitch="glitch">SPELL GRIMOIRE</div>
+            </div>
+            </h1>
             ${suggestionbuttonHTML}
             ${tablesHtml}
           </body>

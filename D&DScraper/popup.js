@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
               .button {
                 display: flex;
                 align-items: left;
-                justify-content: center;
+                justify-content: bottom;
                 width: 169px;
                 padding: 0;
                 background-color: rgb(0, 0, 0);

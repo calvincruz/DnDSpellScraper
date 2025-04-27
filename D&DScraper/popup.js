@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           spellDataForPrint = response; // Store the data
 
-          const openPrintWindow = (data) => {
+          const openPrintWindow = async (data) => {
             const printWindow = window.open("", "_blank");
             if (!printWindow) {
                 throw new Error("Popup window blocked. Please allow popups for this site.");
@@ -46,56 +46,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     range: spell.range === "N/A" ? '--' : spell.range,
                     duration: spell.duration === "N/A" ? '--' : spell.duration,
                     description: (spell.description || '').replace(/\n/g, '<br>'),
-                    spellType: spell.spellType || '--' // Include spell type for potential sorting/filtering
+                    spellType: spell.spellType || '--'
                 });
             });
         
             const columnDefs = [
                 { headerName: "Spell", field: "name", sortable: true, filter: true, cellStyle: params => {
-                    let color = '#ff6666'; // Default red for Action
-                    if (params.data?.spellType?.includes('Bonus')) {
-                        color = '#4444ff'; // Blue for bonus action
-                    } else if (params.data?.spellType?.includes('Reaction')) {
-                        color = '#ffcc00'; // Gold/yellow for reaction
-                    }
+                    let color = '#ff6666';
+                    if (params.data?.spellType?.includes('Bonus')) color = '#4444ff';
+                    else if (params.data?.spellType?.includes('Reaction')) color = '#ffcc00';
                     return { color: color, fontWeight: 'bold', fontSize: '1.1em' };
                 }},
                 { headerName: "Level", field: "level", sortable: true, filter: true },
                 { headerName: "Damage/Heal", field: "damagehealing", sortable: true, filter: true, cellStyle: params => {
-                    const damageTypeColors = {
-                        'acid damage': '#00ff00',
-                        'fire damage': '#ff4444',
-                        'lightning damage': '#ffff00',
-                        'thunder damage': '#aaaaaa',
-                        'cold damage': '#00ffff',
-                        'necrotic damage': '#9900ff',
-                        'radiant damage': '#ffcc00',
-                        'psychic damage': '#ff00ff',
-                        'force damage': '#8888ff',
-                        'poison damage': '#00aa00',
-                        'healing': '#00ff88',
-                        'N/A': '#e0e0e0'
-                    };
-                    const color = damageTypeColors[params.data?.damageType?.toLowerCase()] || '#e0e0e0';
-                    return { color: color };
+                    const colors = { 'acid damage': '#00ff00', 'fire damage': '#ff4444', 'lightning damage': '#ffff00', 'thunder damage': '#aaaaaa', 'cold damage': '#00ffff', 'necrotic damage': '#9900ff', 'radiant damage': '#ffcc00', 'psychic damage': '#ff00ff', 'force damage': '#8888ff', 'poison damage': '#00aa00', 'healing': '#00ff88', 'N/A': '#e0e0e0' };
+                    return { color: colors[params.data?.damageType?.toLowerCase()] || '#e0e0e0' };
                 }},
                 { headerName: "Type", field: "damageType", sortable: true, filter: true, cellStyle: params => {
-                    const damageTypeColors = {
-                        'acid damage': '#00ff00',
-                        'fire damage': '#ff4444',
-                        'lightning damage': '#ffff00',
-                        'thunder damage': '#aaaaaa',
-                        'cold damage': '#00ffff',
-                        'necrotic damage': '#9900ff',
-                        'radiant damage': '#ffcc00',
-                        'psychic damage': '#ff00ff',
-                        'force damage': '#8888ff',
-                        'poison damage': '#00aa00',
-                        'healing': '#00ff88',
-                        'N/A': '#e0e0e0'
-                    };
-                    const color = damageTypeColors[params.value?.toLowerCase()] || '#e0e0e0';
-                    return { color: color };
+                    const colors = { 'acid damage': '#00ff00', 'fire damage': '#ff4444', 'lightning damage': '#ffff00', 'thunder damage': '#aaaaaa', 'cold damage': '#00ffff', 'necrotic damage': '#9900ff', 'radiant damage': '#ffcc00', 'psychic damage': '#ff00ff', 'force damage': '#8888ff', 'poison damage': '#00aa00', 'healing': '#00ff88', 'N/A': '#e0e0e0' };
+                    return { color: colors[params.value?.toLowerCase()] || '#e0e0e0' };
                 }},
                 { headerName: "Hit/DC", field: "hitDC", sortable: true, filter: true },
                 { headerName: "Range", field: "range", sortable: true, filter: true },
@@ -106,101 +75,103 @@ document.addEventListener('DOMContentLoaded', () => {
             const gridOptions = {
                 rowData: rowData,
                 columnDefs: columnDefs,
-                pagination: true, // Optional: Enable pagination
-                paginationPageSize: 20, // Optional: Set page size
+                pagination: true,
+                paginationPageSize: 20,
                 domLayout: 'normal',
-                // Add more AG Grid options here if needed
             };
         
-            const htmlContent = `<!DOCTYPE html>
-                <html>
-                <head>
-                    <style>
-                        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');
-                        body {
-                            background-color: #121212;
-                            color: #e0e0e0;
-                            font-family: 'Noto Sans Mono', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                            margin: 0;
-                            padding: 20px;
-                        }
-                        h1 {
-                            color: #ff4444;
-                            text-align: center;
-                            margin-bottom: 20px;
-                            text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
-                        }
-                        /* Suggest a feature button styles (same as before) */
-                        .button {
-                            display: flex;
-                            align-items: left;
-                            justify-content: center;
-                            width: 169px;
-                            padding: 0;
-                            background-color: rgb(0, 0, 0);
-                            color: white;
-                            border: none;
-                            border-radius: 5px;
-                            cursor: pointer;
-                            font-size: 1em;
-                            font-family: 'Noto Sans Mono', monospace;
-                            transition: background-color 0.3s ease;
-                            margin: 5px auto;
-                            text-decoration: none;
-                        }
+            try {
+                // Fetch AG Grid CSS
+                const cssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css');
+                const cssText = await cssResponse.text();
+                const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-dark.css');
+                const themeCssText = await themeCssResponse.text();
         
-                        .button:hover {
-                            background-color: #1e70ff;
-                        }
+                // Fetch AG Grid JS
+                const jsResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js');
+                const jsText = await jsResponse.text();
         
-                        .button svg {
-                            margin-right: 10px;
-                            align-self: center;
-                        }
+                const htmlContent = `<!DOCTYPE html>
+                    <html>
+                    <head>
+                        <style>
+                            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap');
+                            body {
+                                background-color: #121212;
+                                color: #e0e0e0;
+                                font-family: 'Noto Sans Mono', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                margin: 0;
+                                padding: 20px;
+                            }
+                            h1 {
+                                color: #ff4444;
+                                text-align: center;
+                                margin-bottom: 20px;
+                                text-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
+                            }
+                            .button {
+                                display: flex;
+                                align-items: left;
+                                justify-content: center;
+                                width: 169px;
+                                padding: 0;
+                                background-color: rgb(0, 0, 0);
+                                color: white;
+                                border: none;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                font-size: 1em;
+                                font-family: 'Noto Sans Mono', monospace;
+                                transition: background-color 0.3s ease;
+                                margin: 5px auto;
+                                text-decoration: none;
+                            }
+                            .button:hover {
+                                background-color: #1e70ff;
+                            }
+                            .button svg {
+                                margin-right: 10px;
+                                align-self: center;
+                            }
+                            .button .text {
+                                margin-bottom: 10;
+                                color: #ff4444;
+                            }
+                            /* Inline AG Grid Theme CSS */
+                            ${themeCssText}
+                            /* Inline AG Grid Base CSS */
+                            ${cssText}
+                            #myGrid {
+                                height: 600px;
+                                width: 100%;
+                            }
+                        </style>
+                        <title>D&D Spell Sheet</title>
+                    </head>
+                    <body>
+                        <div class="glitch-wrapper">
+                            <h1 class="glitch" data-glitch="SPELL GRIMOIRE">SPELL GRIMOIRE</h1>
+                        </div>
+                        ${suggestionbuttonHTML}
+                        <div id="myGrid" class="ag-theme-dark"></div>
+                        <script>
+                            ${jsText}
+                            const gridOptions = ${JSON.stringify(gridOptions)};
+                            const myGridElement = document.querySelector('#myGrid');
+                            agGrid.createGrid(myGridElement, gridOptions);
+                        </script>
+                    </body>
+                    </html>`;
         
-                        .button .text {
-                            margin-bottom: 10;
-                            color: #ff4444;
-                        }
+                printWindow.document.open();
+                printWindow.document.write(htmlContent);
+                printWindow.document.close();
         
-                        /* AG Grid Styles - Minimal for dark theme */
-                        .ag-theme-dark {
-                            --ag-foreground-color: #e0e0e0;
-                            --ag-background-color: #1a1a1a;
-                            --ag-header-foreground-color: #ff4444;
-                            --ag-header-background-color: #222222;
-                            --ag-odd-row-background-color: #1e1e1e;
-                            --ag-border-color: #333;
-                        }
-        
-                        #myGrid {
-                            height: 600px; /* Adjust as needed */
-                            width: 100%;
-                        }
-                    </style>
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css">
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-dark.css">
-                    <title>D&D Spell Sheet</title>
-                </head>
-                <body>
-                    <div class="glitch-wrapper">
-                        <h1 class="glitch" data-glitch="SPELL GRIMOIRE">SPELL GRIMOIRE</h1>
-                    </div>
-                    ${suggestionbuttonHTML}
-                    <div id="myGrid" class="ag-theme-dark"></div>
-                    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
-                    <script>
-                        const gridOptions = ${JSON.stringify(gridOptions)};
-                        const myGridElement = document.querySelector('#myGrid');
-                        // **THIS LINE WAS MISSING AND IS CRUCIAL**
-                        agGrid.createGrid(myGridElement, gridOptions);
-                    </script>
-                </body>
-                </html>`;
-        
-            printWindow.document.open();
-            printWindow.document.write(htmlContent);
-            printWindow.document.close();
+            } catch (error) {
+                console.error("Error fetching AG Grid resources:", error);
+                alert("Failed to load spell grid due to resource fetching error.");
+                printWindow.close();
+            }
         };
 
           // Check for updates (remains the same)

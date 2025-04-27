@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const downloadLogsButton = document.getElementById("downloadLogs"); // Get the new button
 
   let spellDataForPrint = null; // Store the spell data
+  let log = {"empty"};
+  chrome.storage.local.set(log);
+  log =  await chrome.storage.local.get("log") + " added";
 
-  chrome.storage.local.set({logs: 'empty'});
-  const log =  await chrome.storage.local.get("logs").toString() + "added";
-
-  chrome.storage.local.set({logs: log});
+  chrome.storage.local.set(log);
 
 
   const logToFile = (level, message, ...args) => {

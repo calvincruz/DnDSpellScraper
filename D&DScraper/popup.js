@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   let log = {logs: "empty"};
   chrome.storage.local.set(log);
 
-  let message = await chrome.storage.local.get('logs').toString();
+  let message = await chrome.storage.local.get(log.logs).toString();
 
   log = {logs: message + " added"};
 

@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
               /* Suggest a feature button styles */
               .button {
                 display: flex;
-                align-items: center;
+                align-items: left;
                 justify-content: center;
                 width: 24px;
                 height: 24px;

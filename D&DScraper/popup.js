@@ -217,6 +217,76 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-size: 1.3em;
                 font-weight: bold;
               }
+
+              <style>
+              .glitch-wrapper {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                background-color: #222;
+              }
+
+              .glitch {
+                position: relative;
+                font-size: 80px;
+                font-weight: 700;
+                line-height: 1.2;
+                color: #fff;
+                letter-spacing: 5px;
+                z-index: 1;
+              }
+
+              .glitch:before,
+              .glitch:after {
+                display: block;
+                content: attr(data-glitch);
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 0.8;
+              }
+
+              .glitch:before {
+                animation: glitch-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+                color: #ff0000;
+                z-index: -1;
+              }
+
+              .glitch:after {
+                animation: glitch-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+                color: #000000;
+                z-index: -2;
+              }
+
+              @keyframes glitch-color {
+                0% {
+                    transform: translate(0);
+                }
+
+                20% {
+                    transform: translate(-3px, 3px);
+                }
+
+                40% {
+                    transform: translate(-3px, -3px);
+                }
+
+                60% {
+                    transform: translate(3px, 3px);
+                }
+
+                80% {
+                    transform: translate(3px, -3px);
+                }
+
+                to {
+                    transform: translate(0);
+                }
+              }
+              </style>
               
               @media print {
                 body {
@@ -244,9 +314,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <title>D&D Spell Sheet</title>
           </head>
           <body>
+            <h1
             <div class="glitch-wrapper">
               <div class="glitch" data-glitch="glitch">SPELL GRIMOIRE</div>
             </div>
+            </h1>
             ${suggestionbuttonHTML}
             ${tablesHtml}
           </body>

@@ -184,6 +184,8 @@ async function extractSpellsFromPage() {
             let name = spellLabelClass.querySelector('.styles_spellName__wX3ll')?.textContent.trim();
             let description = "N/A";
             let duration = "N/A";
+            let castTime = "N/A";
+            let spellType = "N/A";
 
             //first, search the page for the notes part of the spell list
             let search = spell.querySelector('.ddbc-note-components');
@@ -220,8 +222,69 @@ async function extractSpellsFromPage() {
 
                         trueRange = subContainer?.textContent;
                     }
+                    else if (field.textContent.includes("Cast")) {
+                        castTime = field.lastChild.textContent.trim();
+                        if(castTime.includes("reaction")) {
+                            spellType = "Reaction";
+                        }
+                        else if(castTime.includes("bonus")) {
+                            spellType = "Bonus Action";
+                        }
+                        else if(castTime.includes("Action")) {
+                            spellType = "Action";
+                        }
+                        else
+                        {
+                            spellType = "N/A";
+                        }
+                    }
                 }
             }
+
+            if(!description) {
+                description = "N/A";
+            }
+            else
+            {
+                if(castTime)
+                {
+                    castTime = castTime.trim().replace("1 ", "");
+                    if(castTime.includes("r"))
+                    {
+                        castTime = castTime.trim().replace("r", "R");
+                    }
+                    else if(castTime.includes("b"))
+                    {
+                        castTime = castTime.trim().replace("b", "B");
+                    }
+                    else
+                    {
+                        castTime = castTime.trim().replace("a", "A");
+                    }
+
+                    if(description.includes("take a Bonus Action"))
+                    {
+                        castTime += ", Bonus action";
+                    }
+                    
+                    
+                    description = castTime + "\n" + description.trim();
+                }
+            }
+            if(!duration) {
+                duration = "N/A";
+            }
+            if(!castTime) {
+                castTime = "N/A";
+            }
+            if(!trueRange) {
+                trueRange = "N/A";
+            }
+            if(!hitDC) {
+                hitDC = "N/A";
+            }
+            
+            
 
 
             if (name) {
@@ -233,6 +296,7 @@ async function extractSpellsFromPage() {
                     range: trueRange,
                     hitDC: hitDC,
                     duration: duration,
+                    spellType: spellType,
                     description: description
                 });
             }

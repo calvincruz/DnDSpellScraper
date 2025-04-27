@@ -53,39 +53,51 @@ document.addEventListener('DOMContentLoaded', () => {
           const cleanLevel = level.replace(/SlotsNameTimeRangeHit.*/, ' ').trim();
           return `
             <div class="spell-level-section">
-              <div class="table-wrapper">
-                <table class="spell-table">
-                    <thead data-level="${cleanLevel}"> <tr>
-                      <th style="width:15%">Spell - ${cleanLevel}</th>
-                      <th style="width:10%">Damage/Heal</th>
-                      <th style="width:10%">Type</th>
-                      <th style="width:6%">Hit/DC</th>
-                      <th style="width:6%">Range</th>
-                      <th style="width:8%">Duration</th>
-                      <th style="width:45%">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${spells.map(spell => {
-                      const damageType = spell.damageType || 'N/A';
-                      const typeColor = damageTypeColors[damageType] || '#e0e0e0';
-                      const damageHealValue = spell.damagehealing === "N/A" ? '--' : spell.damagehealing;
-                      const damageHealColor = spell.damageType === 'healing' ? damageTypeColors['healing'] : '#e0e0e0'; // Default color if not healing
-                      const description = (spell.description || '').replace(/\n/g, '<br>');
-                      return `
-                        <tr>
-                          <td><span class="spell-name">${spell.name === "N/A" ? '--' : spell.name}</span></td>
-                          <td style="color:${damageHealColor}">${damageHealValue}</td>
-                          <td style="color:${typeColor}">${spell.damageType === "N/A" ? '--' : spell.damageType}</td>
-                          <td>${spell.hitDC === "N/A" ? '--' : spell.hitDC}</td>
-                          <td>${spell.range === "N/A" ? '--' : spell.range}</td>
-                          <td>${spell.duration === "N/A" ? '--' : spell.duration}</td>
-                          <td class="spell-description">${description === "N/A" ? '--' : description}</td>
-                        </tr>`;
-                    }).join('')}
-                  </tbody>
-                </table>
-              </div>
+              <h2></h2>
+              <table class="spell-table">
+                <thead>
+                  <tr>
+                    <th style="width:15%">Spell - ${cleanLevel}</th>
+                    <th style="width:10%">Damage/Heal</th>
+                    <th style="width:10%">Type</th>
+                    <th style="width:6%">Hit/DC</th>
+                    <th style="width:6%">Range</th>
+                    <th style="width:8%">Duration</th>
+                    <th style="width:45%">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${spells.map(spell => {
+                    const damageType = spell.damageType || 'N/A';
+                    const typeColor = damageTypeColors[damageType] || '#e0e0e0';
+                    const damageHealValue = spell.damagehealing === "N/A" ? '--' : spell.damagehealing;
+                    const damageHealColor = typeColor;
+                    const description = (spell.description || '').replace(/\n/g, '<br>');
+
+                    // Determine spell name color based on cast time
+                    let spellNameColor = '#ff6666'; // Default red color for Action
+                    if (spell.spellType) {
+                      if (spell.spellType.includes('Bonus')) {
+                        spellNameColor = '#4444ff'; // Blue for bonus action
+                      } else if (spell.spellType.includes('Reaction')) {
+                        spellNameColor = '#ffcc00'; // Gold/yellow for reactionn
+                      }
+                      // Keep red for action (default)
+                    }
+
+                    return `
+                      <tr>
+                        <td><span class="spell-name" style="color:${spellNameColor}">${spell.name === "N/A" ? '--' : spell.name}</span></td>
+                        <td style="color:${damageHealColor}">${damageHealValue}</td>
+                        <td style="color:${typeColor}">${spell.damageType === "N/A" ? '--' : spell.damageType}</td>
+                        <td>${spell.hitDC === "N/A" ? '--' : spell.hitDC}</td>
+                        <td>${spell.range === "N/A" ? '--' : spell.range}</td>
+                        <td>${spell.duration === "N/A" ? '--' : spell.duration}</td>
+                        <td class="spell-description">${description === "N/A" ? '--' : description}</td>
+                      </tr>`;
+                  }).join('')}
+                </tbody>
+              </table>
             </div>`;
         }).join('');
 
@@ -119,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
               /* —— Crucial sticky‐header rules —— */
               .spell-level-section {
                 margin-bottom: 40px;
+                position: relative;
               }
               .table-wrapper {
                 overflow-x: auto;
@@ -129,21 +142,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 border-collapse: collapse;
                 table-layout: fixed;
               }
-
-              .spell-table thead tr {
+              
+              /* Sticky header styles */
+              .spell-table thead {
+                position: -webkit-sticky;
                 position: sticky;
-                top: 0px; /* Be explicit with the top value */
-                background-color: #1a1a1a; /* Use background-color for clarity */
+                top: 0;
                 z-index: 10;
               }
-              .spell-table thead th {
-                background: #1a1a1a;
+              
+              .spell-table th {
+                background-color: #1a1a1a;
                 color: #ff4444;
                 padding: 12px;
                 border-bottom: 2px solid #ff4444;
               }
-
-              /* —— Rest of your table styling —— */
+              
               .spell-table td {
                 padding: 10px;
                 border-bottom: 1px solid #333;
@@ -155,18 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
               .spell-name {
                 font-size: 1.3em;
                 font-weight: bold;
-                color: #ff6666;
               }
-              .spell-description {
-                vertical-align: top;
-                min-width: 300px;
-                max-width: 800px;
-                line-height: 1.5;
-                word-wrap: break-word;
-                padding: 12px;
-              }
-
-              /* —— Your @media print rules —— */
+              
               @media print {
                 body {
                   background-color: white !important;
@@ -178,9 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 .spell-table tr:nth-child(even) {
                   background-color: #f9f9f9 !important;
-                }
-                .spell-name {
-                  color: #d32f2f !important;
                 }
                 h2 {
                   color: #d32f2f !important;
@@ -250,9 +251,12 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.write(htmlContent);
         printWindow.document.close();
 
-        // ——— Optional: auto-print and close ———
-        // printWindow.print();
-        // printWindow.close();
+        // Instead of inline script, use this approach after creating the document
+        printWindow.addEventListener('load', () => {
+          // Force a reflow to ensure sticky headers are applied correctly
+          printWindow.scrollTo(0, 0);
+          printWindow.document.body.offsetHeight; // Force a reflow
+        });
       };
 
       // Check for updates

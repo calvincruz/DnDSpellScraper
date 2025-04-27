@@ -4,7 +4,7 @@
     "service_worker": "background.js"
   },
   "name": "D&D Beyond Grimoire Creator",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Create a grimoire from your spells on your D&D Beyond character page!",
   "permissions": [
     "alarms",

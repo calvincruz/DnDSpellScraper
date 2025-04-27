@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               .button .text {
                 margin-bottom: 10;
-                color: red;
+                color: white;
               }
               
               /* Sticky header styles */

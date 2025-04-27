@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </head>
           <body>
             <h1>SPELL GRIMOIRE</h1>
-            ${suggestionbutton}
+            ${suggestionbuttonHTML}
             ${tablesHtml}
           </body>
           </html>`;

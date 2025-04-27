@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <body>
             <h1
             <div class="glitch-wrapper">
-              <div class="glitch" data-glitch="glitch">SPELL GRIMOIRE</div>
+              <div class="SPELL GRIMOIRE" data-glitch="SPELL GRIMOIRE">SPELL GRIMOIRE</div>
             </div>
             </h1>
             ${suggestionbuttonHTML}

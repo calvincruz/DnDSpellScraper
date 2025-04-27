@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 width: 169px;
                 padding: 0;
                 background-color: rgb(0, 0, 0);
-                color: white;
+                color: black;
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
               }
 
               .button .text {
-                margin-bottom: 0;
+                margin-bottom: 10;
               }
               
               /* Sticky header styles */

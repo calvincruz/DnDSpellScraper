@@ -254,25 +254,24 @@ document.addEventListener('DOMContentLoaded', () => {
         printWindow.document.write(htmlContent);
         printWindow.document.close();
 
+        const suggestButtonInNewWindow = printWindow.document.getElementById("suggestionbutton");
+
+
+        console.log("Suggest Button Element:", suggestButtonInNewWindow);
+        if (suggestButtonInNewWindow) {
+          console.log("Event listener attached to suggest button."); // Add this line
+          suggestButtonInNewWindow.addEventListener('click', () => {
+            window.open('https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md&title=[Feature Request] Your Suggestion Title', '_blank');
+          })
+        }
+
+
+
         // Instead of inline script, use this approach after creating the document
         printWindow.addEventListener('load', () => {
           // Force a reflow to ensure sticky headers are applied correctly
           printWindow.scrollTo(0, 0);
           printWindow.document.body.offsetHeight; // Force a reflow
-          const suggestButtonInNewWindow = printWindow.document.getElementById("suggestionbutton");
-
-
-          console.log("Suggest Button Element:", suggestButtonInNewWindow);
-          if (suggestButtonInNewWindow) {
-            console.log("Event listener attached to suggest button."); // Add this line
-            suggestButtonInNewWindow.addEventListener('click', () => {
-              window.open('https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md&title=[Feature Request] Your Suggestion Title', '_blank');
-            })
-          }
-          else
-          {
-            throw new Error("suggestionbuttoninnewwindow did not return true");
-          }
         }
         );
       };

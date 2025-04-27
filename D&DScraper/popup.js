@@ -9,7 +9,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   let spellDataForPrint = null; // Store the spell data
   let log = {logs: "empty"};
   chrome.storage.local.set(log);
-  log = {logs: await chrome.storage.local.get("log") + " added"};
+
+  let message = await chrome.storage.local.get('logs').toString();
+
+  log = {logs: message + " added"};
 
   chrome.storage.local.set(log);
 

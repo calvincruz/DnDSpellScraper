@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const printSpellsButton = document.getElementById("printSpells");
   const updateContainer = document.getElementById("updateContainer");
   const updateMessage = document.getElementById("updateMessage");
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let spellDataForPrint = null; // Store the spell data
 
   chrome.storage.local.set({logs: 'empty'});
-  const log =  chrome.storage.local.get("logs").toString() + "added";
+  const log =  await chrome.storage.local.get("logs").toString() + "added";
 
   chrome.storage.local.set({logs: log});
 

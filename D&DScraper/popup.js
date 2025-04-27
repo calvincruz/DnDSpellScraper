@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
               .button {
                 display: flex;
                 align-items: left;
-                justify-content: bottom;
+                justify-content: center;
                 width: 169px;
                 padding: 0;
                 background-color: rgb(0, 0, 0);
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-size: 1em;
                 font-family: 'Noto Sans Mono', monospace;
                 transition: background-color 0.3s ease;
-                margin: 20px auto;
+                margin: 5px auto;
               }
 
               .button:hover {

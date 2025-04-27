@@ -152,8 +152,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 display: flex;
                 align-items: left;
                 justify-content: center;
-                width: 24px;
-                height: 24px;
                 padding: 0;
                 background-color: rgb(0, 0, 0);
                 color: white;

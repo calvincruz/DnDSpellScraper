@@ -256,17 +256,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const suggestButtonInNewWindow = printWindow.document.getElementById("suggestionbutton");
 
-
-        console.log("Suggest Button Element:", suggestButtonInNewWindow);
         if (suggestButtonInNewWindow) {
-          console.log("Event listener attached to suggest button."); // Add this line
-          suggestButtonInNewWindow.addEventListener('click', () => {
-            window.open('https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md&title=[Feature Request] Your Suggestion Title', '_blank');
-            window.close();
-          })
+          suggestButtonInNewWindow.addEventListener('click', (e) => {
+            e.preventDefault();
+            const githubUrl = 'https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md&title=[Feature Request] Your Suggestion Title';
+            printWindow.open(githubUrl, '_blank');
+          });
         }
-
-
 
         // Instead of inline script, use this approach after creating the document
         printWindow.addEventListener('load', () => {

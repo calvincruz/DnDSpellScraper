@@ -9,6 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let spellDataForPrint = null; // Store the spell data
 
   chrome.storage.local.set({logs: 'empty'});
+  const log = chrome.storage.local.get('logs');
+
+  chrome.storage.local.set({logs: log + " added"});
+
 
   const logToFile = (level, message, ...args) => {
       const timestamp = new Date().toISOString();

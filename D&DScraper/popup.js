@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 justify-content: center;
                 width: 169px;
                 padding: 0;
-                background-color: rgb(0, 0, 0);
+                background-color: rgb(255, 255, 255);
                 color: black;
                 border: none;
                 border-radius: 5px;
@@ -171,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
               .button svg {
                 margin-right: 10px;
+                align-self: center;
               }
 
               .button .text {

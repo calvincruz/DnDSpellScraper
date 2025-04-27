@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Function to download logs
   const downloadLogs = () => {
-    if(chrome.storage.local){
       chrome.storage.local.get({ logs: '' }, (data) => {
           const jsonLogs = JSON.stringify({ logs: data.logs.split('\n').filter(Boolean) }, null, 2);
           const blob = new Blob([jsonLogs], { type: 'application/json' });
@@ -39,7 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           // Optionally clear logs after download:
           chrome.storage.local.set({ logs: '' });
       });
-    }
   };
 
   if (downloadLogsButton) {
@@ -215,7 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               } catch (error) {
                   printWindow.document.close();
                   printWindow.close();
-                  throw new Error("Error fetching AG Grid resources:", error);
+                  console.error("Error fetching AG Grid resources:", error);
               }
           };
 
@@ -250,7 +248,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       } catch (error) {
           console.error("Spell extraction error:", error);
-          alert("Failed to generate spell sheet. Try refreshing the page and running the extension again.");
+          console.error("Failed to generate spell sheet. Try refreshing the page and running the extension again.");
       }
   });
 });

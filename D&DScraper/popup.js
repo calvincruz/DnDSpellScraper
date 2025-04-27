@@ -140,7 +140,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                   const jsResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js');
 
 
+
                   const jsText = await jsResponse.text();
+
+                  console.log("Finished jsText: \n" + jsText);
 
                   const htmlContent = `<!DOCTYPE html>
                                       <html>
@@ -215,10 +218,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                                       </html>`;
 
                   printWindow.document.open();
+
+                  console.log("Opened the printWindow");
+
                   printWindow.document.write(htmlContent);
+                  
+                  console.log("Finished writing htmlContent: \n" + htmlContent);
+
                   printWindow.document.close();
 
-                  console.log("Finished writing htmlContent: \n" + htmlContent);
+                  console.log("closed printWindow");
 
               } catch (error) {
                   printWindow.document.close();

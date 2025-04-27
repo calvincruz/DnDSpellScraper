@@ -127,12 +127,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                   // Fetch AG Grid CSS
                   const cssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css');
 
-                  console.log("Fetched response from apgrid for css");
+                  console.log("Fetched response from apgrid for css, here it is: \n" + cssResponse);
 
                   const cssText = await cssResponse.text();
+
+                  console.log("create cssText variable");
+
                   const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-dark.css');
 
-                  console.log("Fetched response from apgrid for dark css");
+                  console.log("Fetched response from apgrid for dark css, here it is: \n" + themeCssResponse);
 
                   const themeCssText = await themeCssResponse.text();
 

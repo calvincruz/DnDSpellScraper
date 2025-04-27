@@ -218,6 +218,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                   printWindow.document.write(htmlContent);
                   printWindow.document.close();
 
+                  console.log("Finished writing htmlContent: \n" + htmlContent);
+
               } catch (error) {
                   printWindow.document.close();
                   printWindow.close();

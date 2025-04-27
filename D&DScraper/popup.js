@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 align-items: center;
                 justify-content: center;
                 text-align: center;
-                background-color: #222;
+                background-color: #121212;
               }
 
               .glitch {

@@ -8,15 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let spellDataForPrint = null; // Store the spell data
 
-  chrome.storage.set({logs: 'empty'});
+  chrome.storage.local.set({logs: 'empty'});
 
   const logToFile = (level, message, ...args) => {
       const timestamp = new Date().toISOString();
       const logEntry = `[${timestamp}] ${level.toUpperCase()}: ${message} ${args.length > 0 ? JSON.stringify(args) : ''}\n`;
 
-      chrome.storage.get({ logs: '' }, (data) => {
+      chrome.storage.local.get({ logs: '' }, (data) => {
           const newLogs = data.logs + logEntry;
-          chrome.storage.set({ logs: newLogs });
+          chrome.storage.local.set({ logs: newLogs });
       });
   };
 
@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to download logs
   const downloadLogs = () => {
-    if(chrome.storage){
-      chrome.storage.get({ logs: '' }, (data) => {
+    if(chrome.storage.local){
+      chrome.storage.local.get({ logs: '' }, (data) => {
           const jsonLogs = JSON.stringify({ logs: data.logs.split('\n').filter(Boolean) }, null, 2);
           const blob = new Blob([jsonLogs], { type: 'application/json' });
           const url = URL.createObjectURL(blob);

@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
               .button svg {
                 width: 24px;
                 height: 24px;
-                margin: 0;
+                margin-right: 10px;
               }
 
               .button .text {

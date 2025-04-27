@@ -7,13 +7,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const downloadLogsButton = document.getElementById("downloadLogs"); // Get the new button
 
   let spellDataForPrint = null; // Store the spell data
-  chrome.storage.local.set({logs : "empty"});
-
-  let message = await chrome.storage.local.get('logs');
-
-  let log = {logs: message.toString() + " added"};
-
-  chrome.storage.local.set(log);
 
 
   const logToFile = (level, message, ...args) => {
@@ -44,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               saveAs: true
           });
           // Optionally clear logs after download:
-          // chrome.storage.local.set({ logs: '' });
+          chrome.storage.local.set({ logs: '' });
       });
     }
   };

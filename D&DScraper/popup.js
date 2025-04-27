@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
 
           if (!response?.spells?.length) {
-              throw new Error("No spells data received or empty spell list");
+              console.log("No spells data received or empty spell list");
           }
 
           spellDataForPrint = response; // Store the data
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           const openPrintWindow = async (data) => {
               const printWindow = window.open("", "_blank");
               if (!printWindow) {
-                  throw new Error("Popup window blocked. Please allow popups for this site.");
+                  console.log("Popup window blocked. Please allow popups for this site.");
               }
 
               const suggestionbuttonHTML = `<a href="https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md" target="_blank" class="button">
@@ -126,12 +126,21 @@ document.addEventListener('DOMContentLoaded', async () => {
               try {
                   // Fetch AG Grid CSS
                   const cssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css');
+
+                  console.log("Fetched response from apgrid for css");
+
                   const cssText = await cssResponse.text();
                   const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-dark.css');
+
+                  console.log("Fetched response from apgrid for dark css");
+
                   const themeCssText = await themeCssResponse.text();
 
                   // Fetch AG Grid JS
                   const jsResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js');
+
+                  console.log("Fetched response from apgrid for javascript");
+
                   const jsText = await jsResponse.text();
 
                   const htmlContent = `<!DOCTYPE html>
@@ -213,7 +222,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               } catch (error) {
                   printWindow.document.close();
                   printWindow.close();
-                  console.error("Error fetching AG Grid resources:", error);
+                  console.log("Error fetching AG Grid resources:", error);
               }
           };
 
@@ -247,8 +256,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
 
       } catch (error) {
-          console.error("Spell extraction error:", error);
-          console.error("Failed to generate spell sheet. Try refreshing the page and running the extension again.");
+          console.log("Spell extraction error:", error);
+          console.log("Failed to generate spell sheet. Try refreshing the page and running the extension again.");
       }
   });
 });

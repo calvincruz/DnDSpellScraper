@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                   const themeCssText = await themeCssResponse.text();
 
                   // Fetch AG Grid JS
-                  const jsResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js');
+                  const jsResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js');
 
                   console.log("Finished jsResponse: \n" + jsResponse);
 

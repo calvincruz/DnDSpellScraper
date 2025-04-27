@@ -164,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-family: 'Noto Sans Mono', monospace;
                 transition: background-color 0.3s ease;
                 margin: 20px auto;
-                text-decoration: none;
               }
 
               .button:hover {

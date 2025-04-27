@@ -78,24 +78,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 </thead>
                 <tbody>
                   ${spells.map(spell => {
-                    const damageType = spell.damageType || 'N/A';
-                    const typeColor = damageTypeColors[damageType] || '#e0e0e0';
-                    const damageHealValue = spell.damagehealing === "N/A" ? '--' : spell.damagehealing;
-                    const damageHealColor = typeColor;
-                    const description = (spell.description || '').replace(/\n/g, '<br>');
+            const damageType = spell.damageType || 'N/A';
+            const typeColor = damageTypeColors[damageType] || '#e0e0e0';
+            const damageHealValue = spell.damagehealing === "N/A" ? '--' : spell.damagehealing;
+            const damageHealColor = typeColor;
+            const description = (spell.description || '').replace(/\n/g, '<br>');
 
-                    // Determine spell name color based on cast time
-                    let spellNameColor = '#ff6666'; // Default red color for Action
-                    if (spell.spellType) {
-                      if (spell.spellType.includes('Bonus')) {
-                        spellNameColor = '#4444ff'; // Blue for bonus action
-                      } else if (spell.spellType.includes('Reaction')) {
-                        spellNameColor = '#ffcc00'; // Gold/yellow for reactionn
-                      }
-                      // Keep red for action (default)
-                    }
+            // Determine spell name color based on cast time
+            let spellNameColor = '#ff6666'; // Default red color for Action
+            if (spell.spellType) {
+              if (spell.spellType.includes('Bonus')) {
+                spellNameColor = '#4444ff'; // Blue for bonus action
+              } else if (spell.spellType.includes('Reaction')) {
+                spellNameColor = '#ffcc00'; // Gold/yellow for reactionn
+              }
+              // Keep red for action (default)
+            }
 
-                    return `
+            return `
                       <tr>
                         <td><span class="spell-name" style="color:${spellNameColor}">${spell.name === "N/A" ? '--' : spell.name}</span></td>
                         <td style="color:${damageHealColor}">${damageHealValue}</td>
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <td>${spell.duration === "N/A" ? '--' : spell.duration}</td>
                         <td class="spell-description">${description === "N/A" ? '--' : description}</td>
                       </tr>`;
-                  }).join('')}
+          }).join('')}
                 </tbody>
               </table>
             </div>`;
@@ -261,8 +261,10 @@ document.addEventListener('DOMContentLoaded', () => {
           printWindow.document.body.offsetHeight; // Force a reflow
           const suggestButtonInNewWindow = printWindow.document.getElementById("suggestionbutton");
 
-          // Attach the event listener
+
+          console.log("Suggest Button Element:", suggestButtonInNewWindow);
           if (suggestButtonInNewWindow) {
+            console.log("Event listener attached to suggest button."); // Add this line
             suggestButtonInNewWindow.addEventListener('click', () => {
               window.open('https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md&title=[Feature Request] Your Suggestion Title', '_blank');
             })

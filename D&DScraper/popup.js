@@ -170,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 console.error("Error fetching AG Grid resources:", error);
                 alert("Failed to load spell grid due to resource fetching error.");
+                printWindow.document.close();
                 printWindow.close();
             }
         };

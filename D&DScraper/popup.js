@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateMessage = document.getElementById("updateMessage");
   const zipBtn = document.getElementById("zipBtn");
   const cancelBtn = document.getElementById("cancelBtn");
-  const suggestionbutton = document.getElementById("suggestionbutton");
 
   let spellDataForPrint = null; // Store the spell data
 
@@ -260,7 +259,16 @@ document.addEventListener('DOMContentLoaded', () => {
           // Force a reflow to ensure sticky headers are applied correctly
           printWindow.scrollTo(0, 0);
           printWindow.document.body.offsetHeight; // Force a reflow
-        });
+          const suggestButtonInNewWindow = printWindow.document.getElementById("suggestionbutton");
+
+          // Attach the event listener
+          if (suggestButtonInNewWindow) {
+            suggestButtonInNewWindow.addEventListener('click', () => {
+              window.open('https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md&title=[Feature Request] Your Suggestion Title', '_blank');
+            })
+          }
+        }
+        );
       };
 
       // Check for updates

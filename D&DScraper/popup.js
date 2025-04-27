@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
               }
 
               .button .text {
-                display: none;
+                margin: 0;
               }
               
               /* Sticky header styles */

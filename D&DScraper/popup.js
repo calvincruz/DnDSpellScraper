@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 align-items: center;
                 justify-content: center;
                 padding: 10px 20px;
-                background-color: #58a6ff; /* GitHub blue */
+                background-color:rgb(0, 0, 0);
                 color: white;
                 border: none;
                 border-radius: 5px;

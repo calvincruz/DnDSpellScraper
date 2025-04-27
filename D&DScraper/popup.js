@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                   const cssText = await cssResponse.text();
 
-                  console.log("create cssText variable");
+                  console.log("create cssText variable, here it is: \n" + cssText);
 
                   const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-dark.css');
 

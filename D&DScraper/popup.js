@@ -218,7 +218,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-weight: bold;
               }
 
-              <style>
+              
+              
+              @media print {
+                body {
+                  background-color: white !important;
+                  color: black !important;
+                }
+                .spell-table th {
+                  background-color: #f1f1f1 !important;
+                  color: #d32f2f !important;
+                }
+                .spell-table tr:nth-child(even) {
+                  background-color: #f9f9f9 !important;
+                }
+                h2 {
+                  color: #d32f2f !important;
+                }
+                .spell-level-section {
+                  page-break-inside: avoid;
+                }
+                .spell-description {
+                  min-width: 400px !important;
+                }
+              }
+            </style>
+
+            <style>
               .glitch-wrapper {
                 width: 100%;
                 height: 100%;
@@ -287,30 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
               }
               </style>
-              
-              @media print {
-                body {
-                  background-color: white !important;
-                  color: black !important;
-                }
-                .spell-table th {
-                  background-color: #f1f1f1 !important;
-                  color: #d32f2f !important;
-                }
-                .spell-table tr:nth-child(even) {
-                  background-color: #f9f9f9 !important;
-                }
-                h2 {
-                  color: #d32f2f !important;
-                }
-                .spell-level-section {
-                  page-break-inside: avoid;
-                }
-                .spell-description {
-                  min-width: 400px !important;
-                }
-              }
-            </style>
             <title>D&D Spell Sheet</title>
           </head>
           <body>

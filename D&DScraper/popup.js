@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                   console.log("Finished jsResponse: \n" + jsResponse);
 
-                  const jsText = await jsResponse.text();
+                  const jsText = jsResponse.toString();
 
                   console.log("Finished jsText: \n" + jsText);
 

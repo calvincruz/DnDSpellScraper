@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
           suggestButtonInNewWindow.addEventListener('click', (e) => {
             e.preventDefault();
             const githubUrl = 'https://github.com/calvincruz/DnDSpellScraper/issues/new?template=feature_request.md&title=[Feature Request] Your Suggestion Title';
-            printWindow.open(githubUrl, '_blank');
+            chrome.tabs.create({ url: githubUrl });
           });
         }
 

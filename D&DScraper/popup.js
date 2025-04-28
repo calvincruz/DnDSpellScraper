@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                   console.log("Got theme text: \n" + themeCssText);
 
                   // Fetch AG Grid JS
-                  const agGridCDNUrl = 'https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js';
+                  const agGridCDNUrl = 'https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.js';
 
 
                   const htmlContent = `<!DOCTYPE html>

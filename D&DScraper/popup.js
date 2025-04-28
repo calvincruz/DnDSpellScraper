@@ -219,15 +219,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                   printWindow.document.open();
 
-                  console.log("Opened the printWindow");
 
                   printWindow.document.write(htmlContent);
                   
-                  console.log("Finished writing htmlContent: \n" + htmlContent);
 
                   printWindow.document.close();
 
-                  console.log("closed printWindow");
 
               } catch (error) {
                   printWindow.document.close();

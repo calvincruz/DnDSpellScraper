@@ -134,8 +134,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                   let themeCssText = '';
                   try {
-                      const themeCssText = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.min.css').text();
+                      const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.min.css');
+                      
+                      console.log("Got theme response status:", themeCssResponse.status);
+                      console.log("Got theme response status text:", themeCssResponse.statusText);
+                      console.log("Got theme response headers:", Object.fromEntries(themeCssResponse.headers.entries()));
+                      
+                      if (!themeCssResponse.ok) {
+                          throw new Error(`Theme CSS fetch failed with status ${themeCssResponse.status}: ${themeCssResponse.statusText}`);
+                      }
 
+                      themeCssText = await themeCssResponse.text();
 
                       console.log("Got theme text length:", themeCssText.length);
                       console.log("Got theme text first 100 chars:", themeCssText.substring(0, 100));
@@ -147,6 +156,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                           if (fallbackResponse.ok) {
                               themeCssText = await fallbackResponse.text();
                               console.log("Successfully fetched fallback theme CSS");
+                          } else {
+                              console.error("Fallback theme CSS fetch failed with status:", fallbackResponse.status);
                           }
                       } catch (fallbackError) {
                           console.error("Error fetching fallback theme CSS:", fallbackError);

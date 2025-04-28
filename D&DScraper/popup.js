@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', async () => {
               };
 
               try {
-                  // Fetch AG Grid CSS
                   const cssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css');
 
                   console.log("Got css response: \n" + cssResponse);
@@ -133,13 +132,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                   console.log("Got css text: \n" + cssText);
 
-                  const themeCssResponse = await fetch('https://unpkg.com/ag-grid-community/styles/ag-theme-material.min.css');
-                  
-                  console.log("Got theme response: \n" + themeCssResponse);
+                  let themeCssText = '';
+                  try {
+                      const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.min.css');
+                      
+                      console.log("Got theme response status:", themeCssResponse.status);
+                      console.log("Got theme response status text:", themeCssResponse.statusText);
+                      console.log("Got theme response headers:", themeCssResponse.headers);
+                      
+                      if (!themeCssResponse.ok) {
+                          console.error(`Theme CSS fetch failed with status ${themeCssResponse.status}`);
+                      }
 
-                  const themeCssText = await themeCssResponse.text();
+                      themeCssText = await themeCssResponse.text();
 
-                  console.log("Got theme text: \n" + themeCssText);
+                      console.log("Got theme text length:", themeCssText.length);
+                      console.log("Got theme text first 100 chars:", themeCssText.substring(0, 100));
+                  } catch (error) {
+                      console.error("Error fetching theme CSS:", error);
+                      // Fallback to non-minified version if minified fails
+                      try {
+                          const fallbackResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css');
+                          if (fallbackResponse.ok) {
+                              themeCssText = await fallbackResponse.text();
+                              console.log("Successfully fetched fallback theme CSS");
+                          }
+                      } catch (fallbackError) {
+                          console.error("Error fetching fallback theme CSS:", fallbackError);
+                      }
+                  }
 
                   // Fetch AG Grid JS
                   const agGridCDNUrl = 'https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js';
@@ -234,7 +255,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                   printWindow.close();
                   console.error("Error fetching AG Grid resources:", error);
               }
-          };
+          } catch (error) {
+              console.error("Error fetching theme CSS:", error);
+          }
 
           // Check for updates (remains the same)
           chrome.runtime.sendMessage({ type: "check_update" }, (updateResponse) => {

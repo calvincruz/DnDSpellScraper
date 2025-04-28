@@ -137,13 +137,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                   const themeCssText = await themeCssResponse.text();
 
                   // Fetch AG Grid JS
-                  const jsResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community@33.0.4/dist/ag-grid-community.min.js');
+                  const agGridCDNUrl = 'https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js';
 
-                  console.log("Finished jsResponse: \n" + jsResponse);
-
-                  const jsText = jsResponse.toString();
-
-                  console.log("Finished jsText: \n" + jsText);
 
                   const htmlContent = `<!DOCTYPE html>
                                       <html>
@@ -208,6 +203,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                           </div>
                                           ${suggestionbuttonHTML}
                                           <div id="myGrid" class="ag-theme-dark"></div>
+                                          <script src="${agGridCDNUrl}"></script>
                                           <script>
                                               ${jsText}
                                               const gridOptions = ${JSON.stringify(gridOptions)};

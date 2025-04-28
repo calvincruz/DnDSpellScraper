@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                   const cssText = await cssResponse.text();
 
-                  const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css');
+                  const themeCssResponse = await fetch('https://unpkg.com/ag-grid-community/styles/ag-theme-material.min.css');
                   
                   console.log("Got theme response: \n" + themeCssResponse);
 

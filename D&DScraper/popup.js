@@ -127,14 +127,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                   // Fetch AG Grid CSS
                   const cssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css');
 
+                  console.log("Got css response");
+
 
                   const cssText = await cssResponse.text();
 
+                  console.log("Got css text");
 
                   const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css');
-
+                  
+                  console.log("Got theme response");
 
                   const themeCssText = await themeCssResponse.text();
+
+                  console.log("Got theme text");
 
                   // Fetch AG Grid JS
                   const agGridCDNUrl = 'https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js';
@@ -217,6 +223,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
                   printWindow.document.write(htmlContent);
+
+                  console.log("Got htmlContent");
                   
 
                   printWindow.document.close();
@@ -225,7 +233,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               } catch (error) {
                   printWindow.document.close();
                   printWindow.close();
-                  console.log("Error fetching AG Grid resources:", error);
+                  console.error("Error fetching AG Grid resources:", error);
               }
           };
 

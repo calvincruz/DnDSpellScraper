@@ -134,17 +134,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                   let themeCssText = '';
                   try {
-                      const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.min.css');
-                      
-                      console.log("Got theme response status:", themeCssResponse.status);
-                      console.log("Got theme response status text:", themeCssResponse.statusText);
-                      console.log("Got theme response headers:", themeCssResponse.headers);
-                      
-                      if (!themeCssResponse.ok) {
-                          console.error(`Theme CSS fetch failed with status ${themeCssResponse.status}`);
-                      }
+                      const themeCssText = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.min.css').text();
 
-                      themeCssText = await themeCssResponse.text();
 
                       console.log("Got theme text length:", themeCssText.length);
                       console.log("Got theme text first 100 chars:", themeCssText.substring(0, 100));

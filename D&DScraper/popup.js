@@ -127,20 +127,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                   // Fetch AG Grid CSS
                   const cssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css');
 
-                  console.log("Got css response");
-
-
                   const cssText = await cssResponse.text();
 
-                  console.log("Got css text");
+                  console.log("Got css text: \n" + cssText);
 
                   const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css');
                   
-                  console.log("Got theme response");
+                  console.log("Got theme response: \n" + themeCssResponse);
 
                   const themeCssText = await themeCssResponse.text();
 
-                  console.log("Got theme text");
+                  console.log("Got theme text: \n" + themeCssText);
 
                   // Fetch AG Grid JS
                   const agGridCDNUrl = 'https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js';

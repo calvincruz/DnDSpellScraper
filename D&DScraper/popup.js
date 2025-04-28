@@ -123,75 +123,38 @@ document.addEventListener('DOMContentLoaded', async () => {
                   domLayout: 'normal',
               };
 
-              try {
-                  const cssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css');
+              async function getResponseHeaders(url) {
+                try {
+                    const response = await fetch(url);
+                    if (response.ok) {
+                        const headers = {};
+                        for (const [key, value] of response.headers.entries()) {
+                            headers[key] = value;
+                        }
+                        console.log(`Got response headers for ${url}:`, JSON.stringify([headers]));
+                    } else {
+                        console.error(`Error fetching ${url}: ${response.status} ${response.statusText}`);
+                    }
+                    return response;
+                } catch (error) {
+                    console.error(`Error fetching ${url}:`, error);
+                    return null;
+                }
+            }
+            
+            try {
+                const cssResponse = await getResponseHeaders('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.min.css');
+                const cssText = cssResponse ? await cssResponse.text() : '';
+            
+                const themeCssResponse = await getResponseHeaders('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css');
+                const themeCssText = themeCssResponse ? await themeCssResponse.text() : '';
+            
+                const agGridJSResponse = await getResponseHeaders('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js');
+                // We don't need the text of the JS, just confirmation it loaded
+            
+                const agGridCDNUrl = 'https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js';
 
-                  console.log("Got css response: \n" + cssResponse);
-
-                  const cssText = await cssResponse.text();
-
-                  console.log("Got css text: \n" + cssText);
-
-                  let themeCssText = '';
-                  try {
-                      const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.min.css', {
-                          headers: {
-                              'Accept-Encoding': 'gzip, deflate, br'
-                          }
-                      });
-                      
-                      console.log("Got theme response status:", themeCssResponse.status);
-                      console.log("Got theme response status text:", themeCssResponse.statusText);
-                      console.log("Got theme response headers:", Object.fromEntries(themeCssResponse.headers.entries()));
-                      
-                      if (!themeCssResponse.ok) {
-                          throw new Error(`Theme CSS fetch failed with status ${themeCssResponse.status}: ${themeCssResponse.statusText}`);
-                      }
-
-                      // Try to get the text content
-                      try {
-                          const blob = await themeCssResponse.blob();
-                          console.log("Got theme CSS blob:", blob);
-                          themeCssText = await blob.text();
-                          console.log("Got theme text length:", themeCssText.length);
-                          console.log("Got theme text first 100 chars:", themeCssText.substring(0, 100));
-                      } catch (textError) {
-                          console.error("Error reading theme CSS text:", textError.message, textError.stack);
-                          throw textError;
-                      }
-                  } catch (error) {
-                      console.error("Error fetching theme CSS:", error.message, error.stack);
-                      // Fallback to non-minified version if minified fails
-                      try {
-                          const fallbackResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css', {
-                              headers: {
-                                  'Accept-Encoding': 'gzip, deflate, br'
-                              }
-                          });
-                          if (fallbackResponse.ok) {
-                              try {
-                                  const blob = await fallbackResponse.blob();
-                                  console.log("Got fallback theme CSS blob:", blob);
-                                  themeCssText = await blob.text();
-                                  console.log("Successfully fetched fallback theme CSS");
-                              } catch (textError) {
-                                  console.error("Error reading fallback theme CSS text:", textError.message, textError.stack);
-                                  throw textError;
-                              }
-                          } else {
-                              console.error("Fallback theme CSS fetch failed with status:", fallbackResponse.status);
-                          }
-                      } catch (fallbackError) {
-                          console.error("Error fetching fallback theme CSS:", fallbackError.message, fallbackError.stack);
-                          throw fallbackError;
-                      }
-                  }
-
-                  // Fetch AG Grid JS
-                  const agGridCDNUrl = 'https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js';
-
-
-                  const htmlContent = `<!DOCTYPE html>
+                const htmlContent = `<!DOCTYPE html>
                                       <html>
                                       <head>
                                           <style>
@@ -273,13 +236,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                   
 
                   printWindow.document.close();
-
-
               } catch (error) {
-                  printWindow.document.close();
-                  printWindow.close();
-                  console.error("Error fetching AG Grid resources:", error);
-              }
+                console.error("Error fetching AG Grid resources:", error);
+                alert("Failed to load spell grid due to resource fetching error.");
+                printWindow.close();
+            }
           }
 
           // Check for updates (remains the same)

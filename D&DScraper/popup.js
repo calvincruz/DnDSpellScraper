@@ -134,7 +134,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                   let themeCssText = '';
                   try {
-                      const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.min.css');
+                      const themeCssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.min.css', {
+                          headers: {
+                              'Accept-Encoding': 'gzip, deflate, br'
+                          }
+                      });
                       
                       console.log("Got theme response status:", themeCssResponse.status);
                       console.log("Got theme response status text:", themeCssResponse.statusText);
@@ -144,18 +148,37 @@ document.addEventListener('DOMContentLoaded', async () => {
                           throw new Error(`Theme CSS fetch failed with status ${themeCssResponse.status}: ${themeCssResponse.statusText}`);
                       }
 
-                      themeCssText = await themeCssResponse.text();
-
-                      console.log("Got theme text length:", themeCssText.length);
-                      console.log("Got theme text first 100 chars:", themeCssText.substring(0, 100));
+                      // Try to get the text content
+                      try {
+                          themeCssText = await themeCssResponse.text();
+                          console.log("Got theme text length:", themeCssText.length);
+                          console.log("Got theme text first 100 chars:", themeCssText.substring(0, 100));
+                      } catch (textError) {
+                          console.error("Error reading theme CSS text:", textError);
+                          // Try to get the raw response as a fallback
+                          const arrayBuffer = await themeCssResponse.arrayBuffer();
+                          themeCssText = new TextDecoder().decode(arrayBuffer);
+                          console.log("Successfully decoded theme CSS from array buffer");
+                      }
                   } catch (error) {
                       console.error("Error fetching theme CSS:", error);
                       // Fallback to non-minified version if minified fails
                       try {
-                          const fallbackResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css');
+                          const fallbackResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css', {
+                              headers: {
+                                  'Accept-Encoding': 'gzip, deflate, br'
+                              }
+                          });
                           if (fallbackResponse.ok) {
-                              themeCssText = await fallbackResponse.text();
-                              console.log("Successfully fetched fallback theme CSS");
+                              try {
+                                  themeCssText = await fallbackResponse.text();
+                                  console.log("Successfully fetched fallback theme CSS");
+                              } catch (textError) {
+                                  console.error("Error reading fallback theme CSS text:", textError);
+                                  const arrayBuffer = await fallbackResponse.arrayBuffer();
+                                  themeCssText = new TextDecoder().decode(arrayBuffer);
+                                  console.log("Successfully decoded fallback theme CSS from array buffer");
+                              }
                           } else {
                               console.error("Fallback theme CSS fetch failed with status:", fallbackResponse.status);
                           }

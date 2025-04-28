@@ -121,38 +121,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                   pagination: true,
                   paginationPageSize: 20,
                   domLayout: 'normal',
+                  theme: 'ag-theme-material-dark'
               };
-
-              async function getResponseHeaders(url) {
-                try {
-                    const response = await fetch(url);
-                    if (response.ok) {
-                        const headers = {};
-                        for (const [key, value] of response.headers.entries()) {
-                            headers[key] = value;
-                        }
-                        console.log(`Got response headers for ${url}:`, JSON.stringify([headers]));
-                    } else {
-                        console.error(`Error fetching ${url}: ${response.status} ${response.statusText}`);
-                    }
-                    return response;
-                } catch (error) {
-                    console.error(`Error fetching ${url}:`, error);
-                    return null;
-                }
-            }
             
             try {
-                const cssResponse = await getResponseHeaders('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.min.css');
-                const cssText = cssResponse ? await cssResponse.text() : '';
-            
-                const themeCssResponse = await getResponseHeaders('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-material.css');
-                const themeCssText = themeCssResponse ? await themeCssResponse.text() : '';
-            
-                const agGridJSResponse = await getResponseHeaders('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js');
-                // We don't need the text of the JS, just confirmation it loaded
-            
-                const agGridCDNUrl = 'https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js';
+                const jsResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js');
+                
+                const jsText = await jsResponse.text();
 
                 const htmlContent = `<!DOCTYPE html>
                                       <html>
@@ -200,10 +175,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                                                   margin-bottom: 10;
                                                   color: #ff4444;
                                               }
-                                              /* Inline AG Grid Theme CSS */
-                                              ${themeCssText}
-                                              /* Inline AG Grid Base CSS */
-                                              ${cssText}
                                               #myGrid {
                                                   height: 600px;
                                                   width: 100%;
@@ -216,8 +187,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                               <h1 class="glitch" data-glitch="SPELL GRIMOIRE">SPELL GRIMOIRE</h1>
                                           </div>
                                           ${suggestionbuttonHTML}
-                                          <div id="myGrid" class="ag-theme-dark"></div>
-                                          <script src="${agGridCDNUrl}"></script>
+                                          <div id="myGrid" class="ag-theme-material-dark"></div>
                                           <script>
                                               ${jsText}
                                               const gridOptions = ${JSON.stringify(gridOptions)};
@@ -238,7 +208,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                   printWindow.document.close();
               } catch (error) {
                 console.error("Error fetching AG Grid resources:", error);
-                alert("Failed to load spell grid due to resource fetching error.");
                 printWindow.close();
             }
           }

@@ -255,8 +255,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                   printWindow.close();
                   console.error("Error fetching AG Grid resources:", error);
               }
-          } catch (error) {
-              console.error("Error fetching theme CSS:", error);
           }
 
           // Check for updates (remains the same)

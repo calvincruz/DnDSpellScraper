@@ -19,7 +19,7 @@
     "https://raw.githubusercontent.com/*"
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self' https://cdn.jsdelivr.net/; object-src 'self'"
   },
   "web_accessible_resources": [
     {

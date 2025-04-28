@@ -125,9 +125,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
               try {
                   // Fetch AG Grid CSS
-                  const cssResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css');
+                  const cssResponse = await fetch('https://unpkg.com/ag-grid-community/styles/ag-grid.min.css');
+
+                  console.log("Got css response: \n" + cssResponse);
 
                   const cssText = await cssResponse.text();
+
+                  console.log("Got css text: \n" + cssText);
 
                   const themeCssResponse = await fetch('https://unpkg.com/ag-grid-community/styles/ag-theme-material.min.css');
                   

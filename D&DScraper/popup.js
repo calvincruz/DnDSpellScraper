@@ -125,7 +125,9 @@ document.addEventListener('DOMContentLoaded', async () => {
               };
             
             try {
-                const jsResponse = await fetch('https://cdn.jsdelivr.net/npm/ag-grid-community@33.2.4/dist/ag-grid-community.js');
+                const jsResponse = await fetch('https://cdnjs.cloudflare.com/ajax/libs/ag-grid-community/33.2.4/ag-grid-community.min.js');
+
+                console.log("Got jsResponse");
                 
                 const jsText = await jsResponse.text();
 
